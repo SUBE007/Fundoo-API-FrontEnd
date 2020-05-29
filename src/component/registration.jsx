@@ -64,57 +64,30 @@ class Registration extends Component {
                     }
                   userRegistration(data).then(res => {
                     if (res.user) {
-                      this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: "Registration Successful"
-                      });
+                      this.setState({ snackbarOpen: true,snackbarMessage: "Registration Successful"  });
                       this.props.history.push("/login"); 
-                    }
-                    else {
-                      this.setState({
-                        snackbarOpen: true,
-                        snackbarMessage: "Some problem occured while Registration"
-                      });
-                    }
-    
+                    } else {
+                      this.setState({ snackbarOpen: true,snackbarMessage: "Some problem occured while Registration"  });
+                     }
                   }).catch(err => {
-                    this.setState({
-                      snackbarOpen: true,
-                      snackbarMessage: err
+                    this.setState({snackbarOpen: true,snackbarMessage: err });
                     });
-                  });
                 }else {
-                  this.setState({
-                    snackbarOpen: true,
-                    snackbarMessage: "Invalid password"
-                   });
+                  this.setState({ snackbarOpen: true,snackbarMessage: "Invalid password" });
                 }
-              } else {
-                this.setState({
-                  snackbarOpen: true,
-                  snackbarMessage: "Invalid e-mail"
-                });
+              }else {
+                this.setState({snackbarOpen: true,snackbarMessage: "Invalid e-mail" });
               }
+            }else {
+              this.setState({snackbarOpen: true,snackbarMessage: "lastName can't contain numbers or special characters" });
             }
-            else {
-              this.setState({
-                snackbarOpen: true,
-                snackbarMessage: "lastName can't contain numbers or special characters"
-              });
+           }else {
+            this.setState({snackbarOpen: true,snackbarMessage: "firstName can't contain numbers or special characters" });
             }
-          } else {
-            this.setState({
-              snackbarOpen: true,
-              snackbarMessage: "firstName can't contain numbers or special characters"
-            });
-          }
         }
         else {
-          this.setState({
-            snackbarOpen: true,
-            snackbarMessage: "please enter all the details"
-          });
-          console.log("please fill all the fields");
+          this.setState({snackbarOpen: true,snackbarMessage: "please enter all the details" });
+            console.log("please fill all the fields");
         }
     }
       handleClose = (reason) => {
@@ -187,7 +160,7 @@ class Registration extends Component {
                       onChange={this.handlePassword} />
                   </div>
                   <div className="setMargin">
-                    <TextField required  label="Re-enter password" fullWidth variant="standard"
+                    <TextField required  label="re-enter password" fullWidth variant="standard"
                       type="password"
                       value={this.state.rePassword}
                       onChange={this.handleCheckPassword} />
@@ -197,10 +170,9 @@ class Registration extends Component {
                 <div className="set_Button">
                   <Button id="styled_component"  color="primary" variant="contained"
                      type="submit"
-                     onClick={this.validation}
-                  >
+                     onClick={this.validation} >
                     SUBMIT
-                   </Button>
+                  </Button>
                 </div>
               </Card>
             </div>

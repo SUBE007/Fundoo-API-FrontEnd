@@ -108,7 +108,7 @@ class Login extends React.Component {
                   onChange={this.handlePassword}
                 />
               </div>
-              <div className="forget_style" onClick={this.forget}>
+              <div className="forget_style" onClick={this.forget} >
                 <span>forgot password</span>
               </div>
               <div className="set_Button">

@@ -1,1 +1,1 @@
-module.exports = { registration:"/user/userSignUp" } 
+module.exports = { registration:"/user/register", login: "/user/login" }; 

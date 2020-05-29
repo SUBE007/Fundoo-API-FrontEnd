@@ -10,4 +10,14 @@ async function userRegistration(registerData) {
     }
 }
 
-export default userRegistration
+export async function login(loginData) {
+    try {
+        const response = await axios.post(process.env.REACT_APP_BASE_URL + userApiConstants.login, loginData);
+        return response;
+    } catch (err)
+     {
+        throw err;
+    }
+}
+
+export default userRegistration;
