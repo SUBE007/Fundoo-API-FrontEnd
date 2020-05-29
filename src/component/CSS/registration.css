@@ -51,6 +51,17 @@
     margin-top: 30px;
   }
 
+  #message-id {
+    margin-left: 100px;
+    margin-right: 80px;
+  }
+
+  .login-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+  } 
 
 
    
