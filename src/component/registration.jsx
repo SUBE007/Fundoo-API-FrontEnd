@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./CSS/registration.css";
 import {withRouter} from "react-router-dom";
-import { TextField, Button, Card, IconButton, createMuiTheme, MuiThemeProvider } from "@material-ui/core"
+import { TextField, Button, Card, IconButton, createMuiTheme, MuiThemeProvider,Snackbar } from "@material-ui/core"
 import  userRegistration  from "../services/userServices";
-import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography  from "@material-ui/core/Typography";       
        
