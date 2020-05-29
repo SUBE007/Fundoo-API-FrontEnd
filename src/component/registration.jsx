@@ -34,34 +34,35 @@ class Registration extends Component {
       };
     } 
 
-      handleFName = event => {
+      handleFName = (event) => {
         this.setState({ firstName: event.target.value })
-      }
-      handleLName = event => {
+      };
+      handleLName = (event) => {
         this.setState({ lastName: event.target.value })
-      }
-      handleEmail = event => {
+      };
+      handleEmail = (event) => {
         this.setState({ email: event.target.value })
-      }
-      handlePassword = event => {
+      };
+      handlePassword = (event) => {
         this.setState({ password: event.target.value })
-      }
-      handleCheckPassword = event => {
-        this.setState({ rePassword: event.target.value })
-      }  
+      };
+      handleCheckPassword = (event) => {
+        this.setState({ rePassword: event.target.value }) 
+      }; 
       
       validation = () => {
-        if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.email !== '' && this.state.password !== '' && this.state.rePassword !== '') {
+        if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.email !== "" && this.state.password !== "" && this.state.rePassword !== "") {
           if (/^[a-zA-Z]{2,12}$/i.test(this.state.firstName)) {
             if (/^[a-zA-Z]{2,12}$/i.test(this.state.lastName)) {
-              if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
-                if (this.state.password === this.state.rePassword && this.state.password.length > 7) {
-                  const data = {
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    email: this.state.email,
-                    password: this.state.password
-                  }
+              if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+                if (this.state.password === this.state.rePassword && 
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(this.state.password)) {
+                    const data = {
+                      firstName: this.state.firstName,
+                      lastName: this.state.lastName,
+                      email: this.state.email,
+                      password: this.state.password
+                    }
                   userRegistration(data).then(res => {
                     if (res.user) {
                       this.setState({
@@ -84,7 +85,7 @@ class Registration extends Component {
                     })
                   }
                   )
-                } else {
+               }else {
                   this.setState({
                     snackbarOpen: true,
                     snackbarMessage: "Invalid password"
@@ -100,13 +101,13 @@ class Registration extends Component {
             else {
               this.setState({
                 snackbarOpen: true,
-                snackbarMessage: "lastName cant contain numbers or special characters"
+                snackbarMessage: "lastName can't contain numbers or special characters"
               })
             }
           } else {
             this.setState({
               snackbarOpen: true,
-              snackbarMessage: "firstName cant contain numbers or special characters"
+              snackbarMessage: "firstName can't contain numbers or special characters"
             })
           }
         }
@@ -141,7 +142,7 @@ class Registration extends Component {
                   <span style={{ color: "Red" }}>O</span>
                 </Typography>
                 <Typography className="register_title" variant="h6" color="warning.main">
-                  Create Your Fundoo Account
+                  <strong> Create Your Fundoo Account </strong>
                 </Typography>
                 <Snackbar
                   anchorOrigin={{
