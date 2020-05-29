@@ -68,54 +68,53 @@ class Registration extends Component {
                       this.setState({
                         snackbarOpen: true,
                         snackbarMessage: "Registration Successful"
-                      })
+                      });
                        
                     }
                     else {
                       this.setState({
                         snackbarOpen: true,
                         snackbarMessage: "Some problem occured while Registration"
-                      })
+                      });
                     }
     
                   }).catch(err => {
                     this.setState({
                       snackbarOpen: true,
                       snackbarMessage: err
-                    })
-                  }
-                  )
-               }else {
+                    });
+                  });
+                }else {
                   this.setState({
                     snackbarOpen: true,
                     snackbarMessage: "Invalid password"
-                   })
+                   });
                 }
               } else {
                 this.setState({
                   snackbarOpen: true,
                   snackbarMessage: "Invalid e-mail"
-                })
+                });
               }
             }
             else {
               this.setState({
                 snackbarOpen: true,
                 snackbarMessage: "lastName can't contain numbers or special characters"
-              })
+              });
             }
           } else {
             this.setState({
               snackbarOpen: true,
               snackbarMessage: "firstName can't contain numbers or special characters"
-            })
+            });
           }
         }
         else {
           this.setState({
             snackbarOpen: true,
             snackbarMessage: "please enter all the details"
-          })
+          });
         }
     }
       handleClose = (reason) => {
@@ -125,7 +124,7 @@ class Registration extends Component {
     
         this.setState({
           snackbarOpen: false
-        })
+        });
       };
       
       render() {
