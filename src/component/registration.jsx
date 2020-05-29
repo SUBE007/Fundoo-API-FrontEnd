@@ -68,7 +68,7 @@ class Registration extends Component {
                         snackbarOpen: true,
                         SnackbarMsg: "Registration Successful"
                       })
-                      this.props.history.push("/login");
+                       
                     }
                     else {
                       this.setState({
@@ -132,7 +132,7 @@ class Registration extends Component {
           <MuiThemeProvider theme={theme}>
             <div className="registration_Form">
               <Card class="registration_Container">
-                <Typography className="app_name" variant="h5" color="textSecondary">
+                <Typography className="app_name" variant="h4" color="textSecondary">
                   <span style={{ color: "Blue" }}>F</span>
                   <span style={{ color: "Red" }}>U</span>
                   <span style={{ color: "Yellow" }}>N</span>
@@ -140,7 +140,7 @@ class Registration extends Component {
                   <span style={{ color: "Green" }}>O</span>
                   <span style={{ color: "Red" }}>O</span>
                 </Typography>
-                <Typography className="register_title" variant="h6" color="textSecondary">
+                <Typography className="register_title" variant="h6" color="warning.main">
                   Create Your Fundoo Account
                 </Typography>
                 <Snackbar
@@ -159,60 +159,44 @@ class Registration extends Component {
                 />
                 <div className="text_Div">
                   <div>
-                    <TextField
-                      required
-                      fullWidth variant="outlined"
-                      label="firstname"
+                    <TextField required fullWidth  label="firstname"variant="standard"
                       type="text"
                       value={this.state.firstName}
                       onChange={this.handleFName} />
                   </div>
-                  <div className="setMargin">
-                    <TextField
-                      fullWidth
-                      required label="lastname"
-                      variant="outlined"
+                   <div className="setMargin">
+                    <TextField fullWidth required label="lastname" variant="standard"
                       type="text"
                       value={this.state.lastName}
                       onChange={this.handleLName} />
                   </div>
                 </div>
+               
                 <div>
-                  <TextField
-                    required
-                    label="email"
-                    fullWidth variant="outlined"
-                    type="text" value={this.state.email}
-                    onChange={this.handleEmail} />
+                  <TextField required label="email" fullWidth variant="standard"
+                     type="text" value={this.state.email}
+                     onChange={this.handleEmail} />
                 </div>
+               
                 <div className="text_Div">
                   <div>
-                    <TextField
-                      required
-                      label="password"
-                      fullWidth
-                      variant="outlined"
+                    <TextField required label="password" fullWidth variant="standard"
                       type="password"
                       value={this.state.password}
                       onChange={this.handlePassword} />
                   </div>
                   <div className="setMargin">
-                    <TextField
-                      required
-                      label="Re-enter password"
-                      fullWidth variant="outlined"
+                    <TextField required  label="Re-enter password"  fullWidth variant="standard"
                       type="password"
                       value={this.state.rePassword}
                       onChange={this.handleCheckPassword} />
                   </div>
-    
                 </div>
+
                 <div className="set_Button">
-                  <Button id="styled_component"
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={this.validation}
+                  <Button id="styled_component"  color="primary" variant="contained"
+                     type="submit"
+                     onClick={this.validation}
                   >
                     SUBMIT
                    </Button>

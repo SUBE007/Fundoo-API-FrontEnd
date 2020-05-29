@@ -8,9 +8,9 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Switch>
+         <Switch>  
           <Route path="/register" component={Registration}></Route>
-        </Switch>
+         </Switch>
       </Router>
     );
   }
