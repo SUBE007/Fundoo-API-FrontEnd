@@ -34,7 +34,7 @@
   .email {
     flex-direction: column;
     display: flex;
-    width: 420px;
+    width: 100%;
   }
 
   .registration_Form {

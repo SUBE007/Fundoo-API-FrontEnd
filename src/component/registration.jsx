@@ -115,6 +115,7 @@ class Registration extends Component {
             snackbarOpen: true,
             snackbarMessage: "please enter all the details"
           });
+          console.log("please fill all the fields");
         }
     }
       handleClose = (reason) => {
@@ -140,7 +141,7 @@ class Registration extends Component {
                   <span style={{ color: "Green" }}>O</span>
                   <span style={{ color: "Red" }}>O</span>
                 </Typography>
-                <Typography className="register_title" variant="h6" color="warning.main">
+                <Typography className="register_title" variant="h6" color="textSecondary">
                   <strong> Create Your Fundoo Account </strong>
                 </Typography>
                 <Snackbar
@@ -172,12 +173,13 @@ class Registration extends Component {
                   </div>
                 </div>
                
-                <div>
-                  <TextField required label="email" fullWidth variant="standard"
-                     type="text" value={this.state.email}
+                  <div className="email">
+                  <TextField required fullWidth label="email"  variant="standard"
+                     type="text" 
+                     value={this.state.email}
                      onChange={this.handleEmail} />
-                </div>
-               
+                 </div>
+                
                 <div className="text_Div">
                   <div>
                     <TextField required label="password" fullWidth variant="standard"
@@ -186,7 +188,7 @@ class Registration extends Component {
                       onChange={this.handlePassword} />
                   </div>
                   <div className="setMargin">
-                    <TextField required  label="Re-enter password"  fullWidth variant="standard"
+                    <TextField required  label="Re-enter password" fullWidth variant="standard"
                       type="password"
                       value={this.state.rePassword}
                       onChange={this.handleCheckPassword} />
