@@ -68,7 +68,7 @@ class Registration extends Component {
                         snackbarOpen: true,
                         snackbarMessage: "Registration Successful"
                       });
-                       
+                      this.props.history.push("/login"); 
                     }
                     else {
                       this.setState({
