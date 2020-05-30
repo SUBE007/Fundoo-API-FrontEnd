@@ -30,11 +30,18 @@ class Login extends  Component {
         }
          this.setState({ snackbarOpen: false });
        };
-      forget = (reason) => {
+      handleForget = (reason) => {
         if (reason === "clickaway") {
           return;
         }
-        this.props.history.push("/forgetPassword");
+        this.props.history.push("/forgetpassword");
+      };
+
+      handleRegister = (reason) => {
+        if (reason === "clickaway") {
+          return;
+        }
+        this.props.history.push("/register");
       };
 
       validation = () => {
@@ -48,7 +55,7 @@ class Login extends  Component {
               login(data)
                 .then((res) => {
                   console.log("Hello Sube!", res);
-                  if (res.user) {
+                  if (res.status===200) {
                     this.setState({snackbarOpen: true, SnackbarMsg: "login Successful" });
                     this.props.history.push("/home");
                     console.log(this.state);
@@ -109,11 +116,13 @@ class Login extends  Component {
                   onChange={this.handlePassword}
                 />
               </div>
-              <div className="forget_style" onClick={this.forget} >
-                <span>forgot password</span>
-              </div>
-              <div className="forget_style" onClick={this.forget} >
-                <span>Create Account</span>
+              <div>
+                  <div className="forget_style" onClick={this.handleForget}  >
+                    <span >forgot password</span>
+                  </div>
+                  <div className="forget_style" onClick={this.handleRegister} >
+                    <span>create account</span>
+                  </div>
               </div>
 
               <div className="set_Button">
