@@ -4,6 +4,9 @@ import {withRouter} from "react-router-dom";
 import { TextField, Button, Card, IconButton, createMuiTheme, MuiThemeProvider,Snackbar } from "@material-ui/core"
 import  userRegistration  from "../services/userServices";
 import CloseIcon from '@material-ui/icons/Close';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Typography  from "@material-ui/core/Typography";       
        
 const theme = createMuiTheme({
@@ -24,6 +27,7 @@ class Registration extends Component {
         firstName: "",
         lastName: "",
         email: "",
+        phoneNumber:"",
         password: "",
         rePassword: "",
         alertMsgType: 'error',
@@ -42,11 +46,17 @@ class Registration extends Component {
       handleEmail = (event) => {
         this.setState({ email: event.target.value })
       };
+      handlePhone = (event) => {
+        this.setState({ phoneNumber: event.target.value })
+      };
       handlePassword = (event) => {
         this.setState({ password: event.target.value })
       };
       handleCheckPassword = (event) => {
         this.setState({ rePassword: event.target.value }) 
+      }; 
+      handleSignIn = () => {
+        this.props.history.push("/login")
       }; 
       
       validation = () => {
@@ -54,42 +64,47 @@ class Registration extends Component {
           if (/^[A-Za-z]{2,12}$/i.test(this.state.firstName)) {
             if (/^[A-Za-z]{2,12}$/i.test(this.state.lastName)) {
               if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
-                if (this.state.password === this.state.rePassword && 
+               if (/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})+$/.test(this.state.phoneNumber)) {
+                 if (this.state.password === this.state.rePassword && 
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(this.state.password)) {
                     const data = {
                       firstName: this.state.firstName,
                       lastName: this.state.lastName,
                       email: this.state.email,
+                      phoneNumber:this.state.phoneNumber,
                       password: this.state.password
                     }
-                  userRegistration(data).then(res => {
+                   userRegistration(data).then(res => {
                     if (res.user) {
                       this.setState({ snackbarOpen: true,snackbarMessage: "Registration Successful"  });
                       this.props.history.push("/login"); 
                     } else {
                       this.setState({ snackbarOpen: true,snackbarMessage: "Some problem occured while Registration"  });
                      }
-                  }).catch(err => {
+                   }).catch(err => {
                     this.setState({snackbarOpen: true,snackbarMessage: err });
                     });
-                }else {
+                  } else {
                   this.setState({ snackbarOpen: true,snackbarMessage: "Invalid password" });
-                }
-              }else {
+                 }
+               } else {
+                  this.setState({snackbarOpen: true,snackbarMessage: "Invalid Phone Number" });
+                 } 
+              } else {
                 this.setState({snackbarOpen: true,snackbarMessage: "Invalid e-mail" });
+                }
+              } else {
+                this.setState({snackbarOpen: true,snackbarMessage: "lastName can't contain numbers or special characters" });
+               }
+              } else {
+                this.setState({snackbarOpen: true,snackbarMessage: "firstName can't contain numbers or special characters" });
+                }
+              } else {
+                  this.setState({snackbarOpen: true,snackbarMessage: "please enter all the details" });
+                  console.log("please fill all the fields");
               }
-            }else {
-              this.setState({snackbarOpen: true,snackbarMessage: "lastName can't contain numbers or special characters" });
-            }
-           }else {
-            this.setState({snackbarOpen: true,snackbarMessage: "firstName can't contain numbers or special characters" });
-            }
-        }
-        else {
-          this.setState({snackbarOpen: true,snackbarMessage: "please enter all the details" });
-            console.log("please fill all the fields");
-        }
-    }
+      }
+
       handleClose = (reason) => {
         if (reason === 'clickaway') {
           return;
@@ -145,33 +160,51 @@ class Registration extends Component {
                   </div>
                 </div>
                
-                  <div className="email">
+                <div className="email">
                   <TextField required fullWidth label="email"  variant="standard"
                      type="text" 
                      value={this.state.email}
                      onChange={this.handleEmail} />
-                 </div>
+                </div>
+                <div className="phone">
+                  <TextField required fullWidth label="phonenumber"  variant="standard"
+                     type="text" 
+                     value={this.state.phoneNumber}
+                     onChange={this.handlePhone} />
+                </div>
                 
                 <div className="text_Div">
                   <div>
                     <TextField required label="password" fullWidth variant="standard"
                       type="password"
                       value={this.state.password}
-                      onChange={this.handlePassword} />
-                  </div>
-                  <div className="setMargin">
+                      onChange={this.handlePassword}
+                      InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton aria-label="toggle password visibility" edge="end"  >
+                                  {this.state.name === "sube" ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }} />
+                   </div>
+                   <div className="setMargin">
                     <TextField required  label="re-enter password" fullWidth variant="standard"
                       type="password"
                       value={this.state.rePassword}
                       onChange={this.handleCheckPassword} />
-                  </div>
-                </div>
+                   </div>
+                 </div>
 
                 <div className="set_Button">
-                  <Button id="styled_component"  color="primary" variant="contained"
-                     type="submit"
-                     onClick={this.validation} >
-                    SUBMIT
+                  <Button id="styled_component"  color="primary" variant="contained"  type="submit"
+                    onClick={this.validation} >
+                    Register
+                  </Button>
+                  <Button id="styled_component"  color="primary" variant="contained"  type="submit"
+                    onClick={this.handleSignIn} >
+                    Login
                   </Button>
                 </div>
               </Card>

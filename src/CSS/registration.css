@@ -36,6 +36,11 @@
     display: flex;
     width: 100%;
   }
+  .phone {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+  }
 
   .registration_Form {
     display: flex;
