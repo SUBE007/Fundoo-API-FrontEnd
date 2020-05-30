@@ -1,4 +1,4 @@
 module.exports = {
-     registration:"/user/register",
+     register:"/user/register",
      login: "/user/login"
  }; 

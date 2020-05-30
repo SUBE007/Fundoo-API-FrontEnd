@@ -1,4 +1,5 @@
-import React from "react";
+//import React from "react";
+import React,{ Component } from "react"; 
 import "./CSS/login.css";
 import { TextField, Card, IconButton } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -7,7 +8,7 @@ import login from "../services/userServices";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 
-class Login extends React.Component {
+class Login extends  Component {
     constructor(props) {
       super(props);
       this.state = {
