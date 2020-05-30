@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./CSS/registration.css";
+import "../CSS/registration.css";
 import {withRouter} from "react-router-dom";
 import { TextField, Button, Card, IconButton, createMuiTheme, MuiThemeProvider,Snackbar } from "@material-ui/core"
 import  userRegistration  from "../services/userServices";
@@ -51,8 +51,8 @@ class Registration extends Component {
       
       validation = () => {
         if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.email !== "" && this.state.password !== "" && this.state.rePassword !== "") {
-          if (/^[a-zA-Z]{2,12}$/i.test(this.state.firstName)) {
-            if (/^[a-zA-Z]{2,12}$/i.test(this.state.lastName)) {
+          if (/^[A-Za-z]{2,12}$/i.test(this.state.firstName)) {
+            if (/^[A-Za-z]{2,12}$/i.test(this.state.lastName)) {
               if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
                 if (this.state.password === this.state.rePassword && 
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(this.state.password)) {
