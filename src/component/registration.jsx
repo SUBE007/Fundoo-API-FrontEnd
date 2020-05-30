@@ -11,11 +11,11 @@ const theme = createMuiTheme({
       MuiPaper: {
         elevation1: {
          boxShadow: "0px 1px 3px 3px gainsboro"
-         
         }
       }
     }
-  })
+  }
+)
 
 class Registration extends Component {
     constructor(props) {

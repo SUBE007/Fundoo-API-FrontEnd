@@ -111,6 +111,10 @@ class Login extends React.Component {
               <div className="forget_style" onClick={this.forget} >
                 <span>forgot password</span>
               </div>
+              <div className="forget_style" onClick={this.forget} >
+                <span>Create Account</span>
+              </div>
+
               <div className="set_Button">
                 <Button id="styled_component" color="primary" variant="contained"
                     type="submit"
