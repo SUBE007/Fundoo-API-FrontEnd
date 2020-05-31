@@ -3,8 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
-import '../CSSFile/ResetPassword.css';
-import {resetPassword} from '../Services/UserService/UserServices';
+import '../CSS/ResetPassword.css';
+import {resetPassword} from '../services/UserService/UserServices';
 
 export class ResetPassword extends Component {
   constructor (props) {
@@ -23,8 +23,8 @@ export class ResetPassword extends Component {
   };
 
   resetPasswordForm = () => {
-    let token = localStorage.getItem ('Token');
-    console.log (token, 'token');
+    let token = localStorage.getItem ("Token");
+    console.log (token, "token");
 
     let user = {};
     user.password = this.state.password;
@@ -32,12 +32,12 @@ export class ResetPassword extends Component {
 
     resetPassword (token, user)
       .then (Response => {
-        console.log ('Password Successfully Changed');
-        alert (`Password Successfully Changed`);
+        console.log ("Password Successfully Changed");
+        alert ("Password Successfully Changed");
       })
       .catch (err => {
-        console.log ('Failed To Change the Password');
-        alert (`Failed To Change the Password`);
+        console.log ("Failed To Change the Password");
+        alert ("Failed To Change the Password");
       });
   };
 
@@ -60,45 +60,27 @@ export class ResetPassword extends Component {
             </div>
             <br />
             <div className="resetpasswordtext">
-              <TextField
-                margin="dense"
-                size="small"
-                name="password"
+              <TextField margin="dense" label="password"  size="small"  name="password"  variant="outlined"
                 id="outlined-required"
-                label="password"
-                variant="outlined"
                 inputProps={{
-                  style: {
-                    height: 35,
-                    width: 340,
-                  },
+                  style: {height: 35, width: 340},
                 }}
                 onChange={this.axios}
               />
             </div>
             <div className="resetpasswordtext">
-              <TextField
-                margin="dense"
-                size="small"
-                name="confirm"
+              <TextField  margin="dense"  label="confirm"  size="small" name="confirm" variant="outlined"
                 id="outlined-required"
-                label="confirm"
-                variant="outlined"
                 inputProps={{
-                  style: {
-                    height: 35,
-                    width: 340,
-                  },
+                  style: {height: 35, width: 340},
                 }}
                 onChange={this.axios}
               />
             </div>
             <br />
             <div className="nextbutton">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.resetPasswordForm}
+              <Button  color="primary" variant="contained"
+                  onClick={this.resetPasswordForm}
               >
                 Next
               </Button>

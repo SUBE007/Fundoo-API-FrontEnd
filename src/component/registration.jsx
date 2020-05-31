@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../CSSFile/Registration.css';
+import "../CSS/Registration.css";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import TextField from '@material-ui/core/TextField';
@@ -8,8 +8,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import {userRegistration} from '../Services/UserService/UserServices';
-import Logo from '../Assets/Logo.png';
+import {userRegistration} from "../services/UserService/UserServices";
+ 
 
 class Registration extends Component {
   constructor (props) {
@@ -44,20 +44,20 @@ class Registration extends Component {
     }
     if (
       !RegExp (
-        '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
+        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
       ).test (this.state.email)
     ) {
-      errors['email'] = '*Enter valid Email id';
+      errors['email'] = "*Enter valid Email id";
     }
     if (!this.state.email) {
-      errors['email'] = '*Enter the Email Id';
+      errors['email'] = "*Enter the Email Id";
       formIsValid = false;
     }
     if (!RegExp("^[1-9][0-9]{9}$").test(this.state.phoneNo)) {
-        errors['phoneNo'] = '*Enter valid Phone Number'
+        errors['phoneNo'] = "*Enter valid Phone Number";
     }
     if (!this.state.phoneNo) {
-        errors['phoneNo'] = '*Enter your Phone Number'
+        errors['phoneNo'] = "*Enter your Phone Number";
         formIsValid = false
     }
 
@@ -97,12 +97,12 @@ class Registration extends Component {
 
       userRegistration (user)
         .then (Response => {
-          console.log (Response, 'User Registered successfully!!');
-          alert (`User Registered successfully`);
+          console.log (Response, "User Registered successfully!!");
+          alert ("User Registered successfully");
         })
         .catch (error => {
           console.log ('Error', error.response);
-          console.log (error.response.data.message, 'User Registration failed');
+          console.log (error.response.data.message, "User Registration failed");
           alert (error.response.data.message);
         });
     }
@@ -126,27 +126,18 @@ class Registration extends Component {
               <div className="main" style={{flexDirection: 'row'}}>
                 <div>
                   <div className="userfirstlastname">
-                    <TextField
-                      // required
-                      margin="dense"
-                      size="small"
-                      name="firstName"
+                    <TextField required margin="dense" size="small" name="firstName" variant="outlined"
                       id="outlined"
-                      label="First Name"
-                      variant="outlined"
+                      label="first name"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.firstName}
                       helperText={this.state.errors.firstName}
                     />
 
-                    <TextField
-                      margin="dense"
-                      size="small"
-                      name="lastName"
+                    <TextField required  margin="dense" size="small" name="lastName" variant="outlined"
                       id="outlined"
-                      label="Last Name"
-                      variant="outlined"
+                      label="last name"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.lastName}
@@ -154,45 +145,30 @@ class Registration extends Component {
                     />
                   </div>
                   <div className="useremail1">
-                    <TextField
-                      margin="dense"
-                      size="small"
-                      name="email"
+                    <TextField required  margin="dense" size="small"  name="email"  variant="outlined"
                       id="outlined"
-                      label="Email"
-                      variant="outlined"
+                      label="e-mail"
                       onChange={this.axios}
                       error={this.state.errors.email}
                       helperText={this.state.errors.email}
                     />
-                    <p className="passwordline">
-                      You'll need to confirm that this email belongs to you
-                    </p>
+                    
                   </div>
                   <div className="phonenumber">
-                    <TextField
-                      margin="dense"
+                    <TextField required margin="dense"  name="phoneNo"  variant="outlined"
                       size="small"
-                      name="phoneNo"
                       id="outlined"
-                      label="Phone Number"
-                      variant="outlined"
+                      label="phone number"
                       onChange={this.axios}
                       error={this.state.errors.phoneNo}
                       helperText={this.state.errors.phoneNo}
                     />
-                    <p className="passwordline">Do not add 0 in front</p>
-                    <br />
                   </div>
                   <div className="userpassword">
-                    <TextField
-                      size="small"
+                    <TextField required  margin="dense"  size="small" name="password" variant="outlined"
                       id="outlined-adornment-password"
-                      variant="outlined"
-                      name="password"
                       type={this.state.showPassword ? 'text' : 'password'}
                       label="password"
-                      margin="dense"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.password}
@@ -202,29 +178,19 @@ class Registration extends Component {
                           <InputAdornment position="end" sytle={{width: '1px'}}>
                             <IconButton
                               onClick={() =>
-                                this.setState ({
-                                  showPassword: !this.state.showPassword,
-                                })}
+                                this.setState ({ showPassword: !this.state.showPassword })}
                             >
-                              {this.state.showPassword
-                                ? <Visibility />
-                                : <VisibilityOff />}
-                            </IconButton>
-
+                            </IconButton> 
                           </InputAdornment>
                         ),
                       }}
                     />
                     <br />
 
-                    <TextField
-                      size="small"
-                      margin="dense"
-                      name="confirm"
+                    <TextField required margin="dense" size="small" name="confirm" variant="outlined"
                       id="outlined-adornment-password"
-                      variant="outlined"
                       type={this.state.showPassword ? 'text' : 'password'}
-                      label=" confirm "
+                      label="confirm pass"
                       value={this.state.confirm}
                       onChange={this.axios}
                       error={this.state.errors.confirm}
@@ -233,53 +199,33 @@ class Registration extends Component {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end" sytle={{width: '1px'}}>
-                            <IconButton
-                              onClick={() =>
-                                this.setState ({
-                                  showPassword: !this.state.showPassword,
-                                })}
-                            >
-                              {this.state.showPassword
-                                ? <Visibility />
-                                : <VisibilityOff />}
+                            <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} >
+                               {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
-
                           </InputAdornment>
                         ),
                       }}
                     />
                   </div>
                   <p className="passwordline">
-                    Use 8 or more characters with mix of letters,numbers & symbols
+                    password must contain digits special char alphabets
                   </p>
                   <br />
                   <br />
                   <div className="userbutton">
-                    <Button
-                      margin="dense"
-                      size="small"
-                      variant="contained"
-                      color="primary"
-                      onClick={() => this.props.history.push ('/')}
-                    >
-                      Sign in instead
+                    <Button  margin="dense"  color="primary" size="small" variant="contained"
+                        onClick={() => this.props.history.push ('/')}
+                      >
+                      Sign in
                     </Button>
-
-                    <Button
-                      margin="dense"
-                      size="small"
-                      variant="contained"
-                      color="primary"
-                      onClick={this.registrationForm}
-                    >
-                      Submit
+                    <Button   margin="dense" color="primary" size="small" variant="contained"
+                       onClick={this.registrationForm} 
+                      >
+                       SUBMIT
                     </Button>
                   </div>
                 </div>
-                <div>
-                  <img src={Logo} width="80%" height="60%" alt="hello" />
-                  <p> One account.All of Fundoo working for you</p>
-                </div>
+                 
               </div>
             </div>
           </div>

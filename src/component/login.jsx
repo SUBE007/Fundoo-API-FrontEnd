@@ -2,20 +2,19 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import '../CSSFile/Login.css';
+import "../CSS/Login.css";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
-import {userLogin} from '../Services/UserService/UserServices';
+import {userLogin} from "../services/UserService/UserServices";
 
 export class Login extends Component {
   constructor (props) {
     super (props);
-
-    this.state = {
+     this.state = {
       userName: '',
       password: '',
       firstName: '',
@@ -26,9 +25,7 @@ export class Login extends Component {
   }
 
   axios = event => {
-    this.setState ({
-      [event.target.name]: event.target.value,
-    });
+    this.setState ({[event.target.name]: event.target.value,});
   };
 
   loginForm = () => {
@@ -45,17 +42,17 @@ export class Login extends Component {
         localStorage.setItem ('FirstName', response.data.data.firstName);
         localStorage.setItem ('LastName', response.data.data.lastName);
         localStorage.setItem ('Profile', response.data.data.profilePic);
-        alert (`Login Successfull`);
+        alert ("Login Successfull");
         this.props.history.push("/dashboard/notes");
       })
       .catch (error => {
         console.log (error);
-        alert (`Login Failed`);
+        alert ("Login Failed");
       });
   };
   render () {
     return (
-      <Card className="log">
+      <Card className="login">
         <CardContent>
           <div className="loginpage">
             <div className="fundoo">
@@ -71,16 +68,10 @@ export class Login extends Component {
               {' '}
               <span>Sign in</span>
             </div>
-            <p className="paragraph"> Use your Fundoo Account</p>
-            <div>
+             <div>
               <div className="usernameLogin">
-                <TextField
-                  margin="dense"
-                  size="small"
-                  name="email"
-                  id="outlined-required"
+                <TextField required margin="dense" size="small"  name="email"  id="outlined-required" variant="outlined"
                   label="username"
-                  variant="outlined"
                   inputProps={{
                     style: {
                       height: 35,
@@ -90,70 +81,49 @@ export class Login extends Component {
                 />
               </div>
 
-              <div className="password">
-                <TextField
-                  size="small"
+             <div className="password">
+                <TextField required size="small" margin="dense" name="password"  variant="outlined"
                   id="outlined-adornment-password"
-                  variant="outlined"
-                  name="password"
                   type={this.state.showPassword ? 'text' : 'password'}
                   label="password"
-                  margin="dense"
                   style={{width: '90%'}}
                   inputProps={{
-                    style: {
-                      height: 35,
-                    },
-                  }}
-                  onChange={this.axios}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end" sytle={{width: '10px'}}>
-                        <IconButton
-                          onClick={() =>
-                            this.setState ({
-                              showPassword: !this.state.showPassword,
-                            })}
-                        >
-                          {this.state.showPassword
-                            ? <Visibility />
-                            : <VisibilityOff />}
+                    style: {height: 35},
+                     endAdornment: (
+                      <InputAdornment position="end" sytle={{width: '1px'}}>
+                        <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword }) } >
+                           {this.state.showPassword ? <Visibility /> : <VisibilityOff />} 
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
+                  onChange={this.axios}
                 />
               </div>
             </div>
-
-            <br />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => this.props.history.push ('/forgotpassword')}
-            >
-              ForgotPassword
-            </Button>
+  
             <div className="flex-container">
               <div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => this.props.history.push ('/register')}
+                <Button  color="primary" variant="contained"
+                   onClick={() => this.props.history.push ('/register')}
                 >
                   Register
                 </Button>
               </div>
               <div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.loginForm}
-                >
+                <Button  variant="contained"  color="primary"
+                   onClick={this.loginForm}
+                  >
                   Login
                 </Button>
               </div>
             </div>
+            <br />
+            <Button  variant="contained"  color="primary"
+                onClick={() => this.props.history.push ('/forgotpassword')}
+            >
+              ForgotPassword
+            </Button>
           </div>
         </CardContent>
       </Card>

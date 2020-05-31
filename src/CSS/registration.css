@@ -1,72 +1,96 @@
-.registration_Container{
-  background-color: whitesmoke;
-  width: 20em;
-  padding: 30px;
-  height: 65vh;
-  box-shadow: 0px 0px 10px 2px; 
+.registercard {
+  color: whitesmoke;
+  margin-top: 5%;
+  margin-left: 400px;
+  width: 400px;
+  height: 500px;
 }
 
-.app_name{
-  margin-top: 20px;
-  margin-bottom: 20px;
+.userregister {
+  padding: 3%;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.passwordline {
+  display: contents;
+  font-weight: 300;
+  font-size: small;
+}
+
+.userfundoo {
+  font-size: 210%;
+  padding-bottom: 2%;
+}
+
+.usersignUp {
+  font-size: 165%;
+  padding-bottom: 2%;
+}
+
+.userfirstlastname {
   display: flex;
-  justify-content: center;
-  align-content: center;  
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 1%;
 }
 
-.register_title{
-    display: flex;
-    flex-direction: column;
-    margin-top: 40px;
- 
+.useremail1 {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding-bottom: 1%;
 }
 
-.firstAndPass {
-    display: flex;
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
+.phonenumber {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 1%;
+}
 
-  .lastAndRePass {
-    margin-left: 20px;
-  }
+.userpassword {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+}
 
-  .email {
-    flex-direction: column;
-    display: flex;
-    width: 100%;
-  }
-  .phone {
-    flex-direction: column;
-    display: flex;
-    width: 100%;
-  }
+.userbutton {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .registration_Form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
+div p {
+  align-items: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+  .name {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      padding: 3%;
   }
-  .set_Button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
+  .useremail1 {
+      padding: 3%;
   }
-
-  #message-id {
-    margin-left: 100px;
-    margin-right: 80px;
+  .userbutton {
+      display: flex;
+      justify-content: space-between;
+      padding: 3%;
   }
-
-  .login-btn{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-  } 
-
-
-   
+  .main {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+}
