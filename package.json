@@ -14,8 +14,10 @@
     "env": "0.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^2.1.8"
+    "react-scripts": "^2.1.8",
+    "react-toastify": "^6.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

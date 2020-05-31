@@ -1,141 +1,163 @@
 
-import React,{ Component } from "react"; 
-import "../CSS/login.css";
-import { TextField, Card, IconButton } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import login from "../services/userServices";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
+import React, {Component} from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import '../CSSFile/Login.css';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import CardContent from '@material-ui/core/CardContent';
+import Card from '@material-ui/core/Card';
+import {userLogin} from '../Services/UserService/UserServices';
 
-class Login extends  Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        email: "",
-        password: "",
-        SnackbarMsg: "",
-        snackbarOpen: false,
-      };
-    }
-    handleEmail = (event) => {
-        this.setState({ email: event.target.value });
-      };
-      handlePassword = (event) => {
-        this.setState({ password: event.target.value });
-      };
-      handleClose = (reason) => {
-        if (reason === "clickaway") {
-          return;
-        }
-         this.setState({ snackbarOpen: false });
-       };
-      handleForget = (reason) => {
-        if (reason === "clickaway") {
-          return;
-        }
-        this.props.history.push("/forgetpassword");
-      };
+export class Login extends Component {
+  constructor (props) {
+    super (props);
 
-      handleRegister = (reason) => {
-        if (reason === "clickaway") {
-          return;
-        }
-        this.props.history.push("/register");
-      };
+    this.state = {
+      userName: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      showPassword: '',
+    };
+  }
 
-      validation = () => {
-          const data = {
-          email: this.state.email,
-          password: this.state.password,
-        };
-        if (this.state.email !== "") {
-          if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email) ) {
-            if (this.state.password !== "") {
-              login(data)
-                .then((res) => {
-                  console.log("Hello Sube!", res);
-                  if (res.status===200) {
-                    this.setState({snackbarOpen: true, SnackbarMsg: "login Successful" });
-                    this.props.history.push("/home");
-                    console.log(this.state);
-                  }else{
-                    this.setState({snackbarOpen: true,SnackbarMsg: "login failed check e-mail or password" });
-                   }
-                })
-                .catch((err) => { console.log(err); });
-              } else {
-              this.setState({ snackbarOpen: true, SnackbarMsg: "please enter your password" });
-             }
-          } else {
-            this.setState({snackbarOpen: true,SnackbarMsg: "invalid email address" });
-           }
-        } else {
-          this.setState({snackbarOpen: true,SnackbarMsg: "please enter your email" });
-          }
-      };
+  axios = event => {
+    this.setState ({
+      [event.target.name]: event.target.value,
+    });
+  };
 
-      render() {
-        return (
-          <div className="login_Form">
-            <Card class="login_Container">
-              <Typography className="app_name" variant="h5" color="textSecondary">
-              <span style={{ color: "Blue" }}>F</span>
-                  <span style={{ color: "Red" }}>U</span>
-                  <span style={{ color: "Yellow" }}>N</span>
-                  <span style={{ color: "Blue" }}>D</span>
-                  <span style={{ color: "Green" }}>O</span>
-                  <span style={{ color: "Red" }}>O</span>
-              </Typography>
-              <div className="login">Sign in Page</div>
-              <Snackbar id="snackbar_color"
-                anchorOrigin={{  vertical: "bottom", horizontal: "center" }}
-                autoHideDuration={2000}
-                open={this.state.snackbarOpen}
-                message={<span id="message-id">{this.state.SnackbarMsg}</span>}
-                action={
-                  <React.Fragment>
-                    <IconButton size="small" aria-label="close" color="secondary"
-                        onClick={this.handleClose}
-                    >
-                      <CloseIcon fontSize="small" />
-                    </IconButton>
-                  </React.Fragment>
-                }
-              />
-    
-              <div className="set_Div" data-test="EMAIL">
-                <TextField  required label="email" variant="standard"  type="text"
-                  value={this.state.email}
-                  onChange={this.handleEmail}
+  loginForm = () => {
+    let user = {};
+    user.email = this.state.email;
+    user.password = this.state.password;
+
+    userLogin (user)
+      .then (response => {
+        console.log (response);
+        console.log ('data', response.data.data);
+        localStorage.setItem ('Token', response.data.message);
+        localStorage.setItem ('Email', response.data.data.email);
+        localStorage.setItem ('FirstName', response.data.data.firstName);
+        localStorage.setItem ('LastName', response.data.data.lastName);
+        localStorage.setItem ('Profile', response.data.data.profilePic);
+        alert (`Login Successfull`);
+        this.props.history.push("/dashboard/notes");
+      })
+      .catch (error => {
+        console.log (error);
+        alert (`Login Failed`);
+      });
+  };
+  render () {
+    return (
+      <Card className="log">
+        <CardContent>
+          <div className="loginpage">
+            <div className="fundoo">
+            <span style={{ color: "Blue" }}>F</span>
+               <span style={{ color: "Red" }}>U</span>
+               <span style={{ color: "Yellow" }}>N</span>
+               <span style={{ color: "Blue" }}>D</span>
+               <span style={{ color: "Green" }}>O</span>
+               <span style={{ color: "Red" }}>O</span> 
+            </div>
+
+            <div className="signInLogin">
+              {' '}
+              <span>Sign in</span>
+            </div>
+            <p className="paragraph"> Use your Fundoo Account</p>
+            <div>
+              <div className="usernameLogin">
+                <TextField
+                  margin="dense"
+                  size="small"
+                  name="email"
+                  id="outlined-required"
+                  label="username"
+                  variant="outlined"
+                  inputProps={{
+                    style: {
+                      height: 35,
+                    },
+                  }}
+                  onChange={this.axios}
                 />
               </div>
-              <div className="set_Div">
-                <TextField required label="password" variant="standard" type="password"
-                  value={this.state.password}
-                  onChange={this.handlePassword}
+
+              <div className="password">
+                <TextField
+                  size="small"
+                  id="outlined-adornment-password"
+                  variant="outlined"
+                  name="password"
+                  type={this.state.showPassword ? 'text' : 'password'}
+                  label="password"
+                  margin="dense"
+                  style={{width: '90%'}}
+                  inputProps={{
+                    style: {
+                      height: 35,
+                    },
+                  }}
+                  onChange={this.axios}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" sytle={{width: '10px'}}>
+                        <IconButton
+                          onClick={() =>
+                            this.setState ({
+                              showPassword: !this.state.showPassword,
+                            })}
+                        >
+                          {this.state.showPassword
+                            ? <Visibility />
+                            : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </div>
+            </div>
+
+            <br />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.history.push ('/forgotpassword')}
+            >
+              ForgotPassword
+            </Button>
+            <div className="flex-container">
               <div>
-                  <div className="forget_style" onClick={this.handleForget}  >
-                    <span >forgot password</span>
-                  </div>
-                  <div className="forget_style" onClick={this.handleRegister} >
-                    <span>create account</span>
-                  </div>
-              </div>
-
-              <div className="set_Button">
-                <Button id="styled_component" color="primary" variant="contained"
-                    type="submit"
-                    onClick={this.validation}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.props.history.push ('/register')}
                 >
-                  login
+                  Register
                 </Button>
               </div>
-            </Card>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.loginForm}
+                >
+                  Login
+                </Button>
+              </div>
+            </div>
           </div>
-        );
-      }
-    }
-    export default Login;
+        </CardContent>
+      </Card>
+    );
+  }
+}
+export default Login;

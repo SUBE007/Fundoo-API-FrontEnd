@@ -1,217 +1,292 @@
-import React, { Component } from "react";
-import "../CSS/registration.css";
-import {withRouter} from "react-router-dom";
-import { TextField, Button, Card, IconButton, createMuiTheme, MuiThemeProvider,Snackbar } from "@material-ui/core"
-import  userRegistration  from "../services/userServices";
-import CloseIcon from '@material-ui/icons/Close';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import React, {Component} from 'react';
+import '../CSSFile/Registration.css';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Typography  from "@material-ui/core/Typography";       
-       
-const theme = createMuiTheme({
-    overrides: {
-      MuiPaper: {
-        elevation1: {
-         boxShadow: "0px 1px 3px 3px gainsboro"
-        }
-      }
-    }
-  }
-)
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import {userRegistration} from '../Services/UserService/UserServices';
+import Logo from '../Assets/Logo.png';
 
 class Registration extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber:"",
-        password: "",
-        rePassword: "",
-        alertMsgType: 'error',
-        snackbarOpen: false,
-        snackbarMessage: "",
-        service: "",
-      };
-    } 
+  constructor (props) {
+    super (props);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirm: '',
+      phoneNo: '',
+      errors: {},
+    };
+  }
 
-      handleFName = (event) => {
-        this.setState({ firstName: event.target.value })
-      };
-      handleLName = (event) => {
-        this.setState({ lastName: event.target.value })
-      };
-      handleEmail = (event) => {
-        this.setState({ email: event.target.value })
-      };
-      handlePhone = (event) => {
-        this.setState({ phoneNumber: event.target.value })
-      };
-      handlePassword = (event) => {
-        this.setState({ password: event.target.value })
-      };
-      handleCheckPassword = (event) => {
-        this.setState({ rePassword: event.target.value }) 
-      }; 
-      handleSignIn = () => {
-        this.props.history.push("/login")
-      }; 
-      
-      validation = () => {
-        if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.email !== "" && this.state.password !== "" && this.state.rePassword !== "") {
-          if (/^[A-Za-z]{2,12}$/i.test(this.state.firstName)) {
-            if (/^[A-Za-z]{2,12}$/i.test(this.state.lastName)) {
-              if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
-               if (/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})+$/.test(this.state.phoneNumber)) {
-                 if (this.state.password === this.state.rePassword && 
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(this.state.password)) {
-                    const data = {
-                      firstName: this.state.firstName,
-                      lastName: this.state.lastName,
-                      email: this.state.email,
-                      phoneNumber:this.state.phoneNumber,
-                      password: this.state.password
-                    }
-                   userRegistration(data).then(res => {
-                    if (res.user) {
-                      this.setState({ snackbarOpen: true,snackbarMessage: "Registration Successful"  });
-                      this.props.history.push("/login"); 
-                    } else {
-                      this.setState({ snackbarOpen: true,snackbarMessage: "Some problem occured while Registration"  });
-                     }
-                   }).catch(err => {
-                    this.setState({snackbarOpen: true,snackbarMessage: err });
-                    });
-                  } else {
-                  this.setState({ snackbarOpen: true,snackbarMessage: "Invalid password" });
-                 }
-               } else {
-                  this.setState({snackbarOpen: true,snackbarMessage: "Invalid Phone Number" });
-                 } 
-              } else {
-                this.setState({snackbarOpen: true,snackbarMessage: "Invalid e-mail" });
-                }
-              } else {
-                this.setState({snackbarOpen: true,snackbarMessage: "lastName can't contain numbers or special characters" });
-               }
-              } else {
-                this.setState({snackbarOpen: true,snackbarMessage: "firstName can't contain numbers or special characters" });
-                }
-              } else {
-                  this.setState({snackbarOpen: true,snackbarMessage: "please enter all the details" });
-                  console.log("please fill all the fields");
-              }
-      }
+  axios = event => {
+    this.setState ({
+      [event.target.name]: event.target.value,
+    });
+  };
 
-      handleClose = (reason) => {
-        if (reason === 'clickaway') {
-          return;
+  validateForm = () => {
+    let errors = {};
+    let formIsValid = true;
+    if (!this.state.firstName) {
+      errors['firstName'] = '*Enter the First Name';
+      formIsValid = false;
+    }
+    if (!this.state.lastName) {
+      errors['lastName'] = '*Enter the Last Name';
+      formIsValid = false;
+    }
+    if (
+      !RegExp (
+        '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
+      ).test (this.state.email)
+    ) {
+      errors['email'] = '*Enter valid Email id';
+    }
+    if (!this.state.email) {
+      errors['email'] = '*Enter the Email Id';
+      formIsValid = false;
+    }
+    if (!RegExp("^[1-9][0-9]{9}$").test(this.state.phoneNo)) {
+        errors['phoneNo'] = '*Enter valid Phone Number'
+    }
+    if (!this.state.phoneNo) {
+        errors['phoneNo'] = '*Enter your Phone Number'
+        formIsValid = false
+    }
+
+    if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,40})").test(this.state.password)) {
+            errors['password'] = '*Enter the valid password'
+            formIsValid = false
         }
-    
-        this.setState({
-          snackbarOpen: false
+        if (!this.state.password) {
+            errors['password'] = '*Enter the password'
+            formIsValid = false
+        }
+        if (!this.state.confirm) {
+            errors['confirmPassword'] = '*Enter the confirm password'
+            formIsValid = false
+        }
+        if (this.state.password !== this.state.confirm) {
+            errors['confirmPassword'] = '*Password doesn\'t match'
+            formIsValid = false
+        }
+
+    this.setState ({
+      errors: errors,
+    });
+    return formIsValid;
+  };
+
+  registrationForm = () => {
+    if (this.validateForm ()) {
+      let user = {};
+      user.firstName = this.state.firstName;
+      user.lastName = this.state.lastName;
+      user.email = this.state.email;
+      user.password = this.state.password;
+      user.confirm = this.state.confirm;
+      user.phoneNo = this.state.phoneNo;
+      console.log (user);
+
+      userRegistration (user)
+        .then (Response => {
+          console.log (Response, 'User Registered successfully!!');
+          alert (`User Registered successfully`);
+        })
+        .catch (error => {
+          console.log ('Error', error.response);
+          console.log (error.response.data.message, 'User Registration failed');
+          alert (error.response.data.message);
         });
-      };
-      
-      render() {
-        return (
-          <MuiThemeProvider theme={theme}>
-            <div className="registration_Form">
-              <Card class="registration_Container">
-                <Typography className="app_name" variant="h4" color="textSecondary">
-                  <span style={{ color: "Blue" }}>F</span>
-                  <span style={{ color: "Red" }}>U</span>
-                  <span style={{ color: "Yellow" }}>N</span>
-                  <span style={{ color: "Blue" }}>D</span>
-                  <span style={{ color: "Green" }}>O</span>
-                  <span style={{ color: "Red" }}>O</span>
-                </Typography>
-                <Typography className="register_title" variant="h6" color="textSecondary">
-                  <strong> Create Your Fundoo Account </strong>
-                </Typography>
-                <Snackbar
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                  }}
-                  autoHideDuration={2000}
-                  open={this.state.snackbarOpen}
-                  message={<span id="message-id">{this.state.snackbarMessage}</span>}
-                  action={
-                    <IconButton size="small" aria-label="close" color="secondary" onClick={this.handleClose}>
-                      <CloseIcon fontSize="small" />
-                    </IconButton>
-                  }
-                />
-                <div className="text_Div">
-                  <div>
-                    <TextField required fullWidth  label="firstname"variant="standard"
-                      type="text"
-                      value={this.state.firstName}
-                      onChange={this.handleFName} />
+    }
+  };
+
+  render () {
+    return (
+      <Card className="registercard">
+        <CardContent>
+          <div className="backgroundregister">
+            <div className="userregister">
+              <div className="userfundoo">
+                <span style={{ color: "Blue" }}>F</span>
+                <span style={{ color: "Red" }}>U</span>
+                <span style={{ color: "Yellow" }}>N</span>
+                <span style={{ color: "Blue" }}>D</span>
+                <span style={{ color: "Green" }}>O</span>
+                <span style={{ color: "Red" }}>O</span> 
+              </div>
+              <div className="usersignUp">Create your Fundoo Account</div>
+              <div className="main" style={{flexDirection: 'row'}}>
+                <div>
+                  <div className="userfirstlastname">
+                    <TextField
+                      // required
+                      margin="dense"
+                      size="small"
+                      name="firstName"
+                      id="outlined"
+                      label="First Name"
+                      variant="outlined"
+                      style={{width: '48%'}}
+                      onChange={this.axios}
+                      error={this.state.errors.firstName}
+                      helperText={this.state.errors.firstName}
+                    />
+
+                    <TextField
+                      margin="dense"
+                      size="small"
+                      name="lastName"
+                      id="outlined"
+                      label="Last Name"
+                      variant="outlined"
+                      style={{width: '48%'}}
+                      onChange={this.axios}
+                      error={this.state.errors.lastName}
+                      helperText={this.state.errors.lastName}
+                    />
                   </div>
-                   <div className="setMargin">
-                    <TextField fullWidth required label="lastname" variant="standard"
-                      type="text"
-                      value={this.state.lastName}
-                      onChange={this.handleLName} />
+                  <div className="useremail1">
+                    <TextField
+                      margin="dense"
+                      size="small"
+                      name="email"
+                      id="outlined"
+                      label="Email"
+                      variant="outlined"
+                      onChange={this.axios}
+                      error={this.state.errors.email}
+                      helperText={this.state.errors.email}
+                    />
+                    <p className="passwordline">
+                      You'll need to confirm that this email belongs to you
+                    </p>
                   </div>
-                </div>
-               
-                <div className="email">
-                  <TextField required fullWidth label="email"  variant="standard"
-                     type="text" 
-                     value={this.state.email}
-                     onChange={this.handleEmail} />
-                </div>
-                <div className="phone">
-                  <TextField required fullWidth label="phonenumber"  variant="standard"
-                     type="text" 
-                     value={this.state.phoneNumber}
-                     onChange={this.handlePhone} />
-                </div>
-                
-                <div className="text_Div">
-                  <div>
-                    <TextField required label="password" fullWidth variant="standard"
-                      type="password"
-                      value={this.state.password}
-                      onChange={this.handlePassword}
+                  <div className="phonenumber">
+                    <TextField
+                      margin="dense"
+                      size="small"
+                      name="phoneNo"
+                      id="outlined"
+                      label="Phone Number"
+                      variant="outlined"
+                      onChange={this.axios}
+                      error={this.state.errors.phoneNo}
+                      helperText={this.state.errors.phoneNo}
+                    />
+                    <p className="passwordline">Do not add 0 in front</p>
+                    <br />
+                  </div>
+                  <div className="userpassword">
+                    <TextField
+                      size="small"
+                      id="outlined-adornment-password"
+                      variant="outlined"
+                      name="password"
+                      type={this.state.showPassword ? 'text' : 'password'}
+                      label="password"
+                      margin="dense"
+                      style={{width: '48%'}}
+                      onChange={this.axios}
+                      error={this.state.errors.password}
+                      helperText={this.state.errors.password}
                       InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton aria-label="toggle password visibility" edge="end"  >
-                                  {this.state.name === "sube" ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }} />
-                   </div>
-                   <div className="setMargin">
-                    <TextField required  label="re-enter password" fullWidth variant="standard"
-                      type="password"
-                      value={this.state.rePassword}
-                      onChange={this.handleCheckPassword} />
-                   </div>
-                 </div>
+                          <InputAdornment position="end" sytle={{width: '1px'}}>
+                            <IconButton
+                              onClick={() =>
+                                this.setState ({
+                                  showPassword: !this.state.showPassword,
+                                })}
+                            >
+                              {this.state.showPassword
+                                ? <Visibility />
+                                : <VisibilityOff />}
+                            </IconButton>
 
-                <div className="set_Button">
-                  <Button id="styled_component"  color="primary" variant="contained"  type="submit"
-                    onClick={this.validation} >
-                    Register
-                  </Button>
-                  <Button id="styled_component"  color="primary" variant="contained"  type="submit"
-                    onClick={this.handleSignIn} >
-                    Login
-                  </Button>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <br />
+
+                    <TextField
+                      size="small"
+                      margin="dense"
+                      name="confirm"
+                      id="outlined-adornment-password"
+                      variant="outlined"
+                      type={this.state.showPassword ? 'text' : 'password'}
+                      label=" confirm "
+                      value={this.state.confirm}
+                      onChange={this.axios}
+                      error={this.state.errors.confirm}
+                      helperText={this.state.errors.confirm}
+                      style={{width: '48%'}}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end" sytle={{width: '1px'}}>
+                            <IconButton
+                              onClick={() =>
+                                this.setState ({
+                                  showPassword: !this.state.showPassword,
+                                })}
+                            >
+                              {this.state.showPassword
+                                ? <Visibility />
+                                : <VisibilityOff />}
+                            </IconButton>
+
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </div>
+                  <p className="passwordline">
+                    Use 8 or more characters with mix of letters,numbers & symbols
+                  </p>
+                  <br />
+                  <br />
+                  <div className="userbutton">
+                    <Button
+                      margin="dense"
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={() => this.props.history.push ('/')}
+                    >
+                      Sign in instead
+                    </Button>
+
+                    <Button
+                      margin="dense"
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={this.registrationForm}
+                    >
+                      Submit
+                    </Button>
+                  </div>
                 </div>
-              </Card>
+                <div>
+                  <img src={Logo} width="80%" height="60%" alt="hello" />
+                  <p> One account.All of Fundoo working for you</p>
+                </div>
+              </div>
             </div>
-          </MuiThemeProvider>
-        )
-      }
-}  
-       
-export default withRouter(Registration);    
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+}
+
+export default Registration;
