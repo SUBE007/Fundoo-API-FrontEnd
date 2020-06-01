@@ -35,48 +35,45 @@ class Registration extends Component {
     let errors = {};
     let formIsValid = true;
     if (!this.state.firstName) {
-      errors['firstName'] = '*Enter the First Name';
+      errors['firstName'] = '*enter the first name';
       formIsValid = false;
     }
     if (!this.state.lastName) {
-      errors['lastName'] = '*Enter the Last Name';
+      errors['lastName'] = '*enter the last name';
       formIsValid = false;
     }
-    if (
-      !RegExp (
-        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-      ).test (this.state.email)
+    if (!RegExp ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+        .test (this.state.email)
     ) {
-      errors['email'] = "*Enter valid Email id";
+      errors['email'] = "*enter valid e-mail id";
     }
     if (!this.state.email) {
-      errors['email'] = "*Enter the Email Id";
+      errors['email'] = "*enter the e-mail id";
       formIsValid = false;
     }
     if (!RegExp("^[1-9][0-9]{9}$").test(this.state.phoneNo)) {
-        errors['phoneNo'] = "*Enter valid Phone Number";
+        errors['phoneNo'] = "*enter valid phone number";
     }
     if (!this.state.phoneNo) {
-        errors['phoneNo'] = "*Enter your Phone Number";
+        errors['phoneNo'] = "*enter your phone number";
         formIsValid = false
     }
-
-    if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,40})").test(this.state.password)) {
-            errors['password'] = '*Enter the valid password'
-            formIsValid = false
-        }
-        if (!this.state.password) {
-            errors['password'] = '*Enter the password'
-            formIsValid = false
-        }
-        if (!this.state.confirm) {
-            errors['confirmPassword'] = '*Enter the confirm password'
-            formIsValid = false
-        }
-        if (this.state.password !== this.state.confirm) {
-            errors['confirmPassword'] = '*Password doesn\'t match'
-            formIsValid = false
-        }
+    if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,20})").test(this.state.password)) {
+        errors['password'] = '*enter the valid password'
+        formIsValid = false
+    }
+    if (!this.state.password) {
+        errors['password'] = '*enter the password'
+        formIsValid = false
+    }
+    if (!this.state.confirm) {
+        errors['confirm'] = '*enter the confirm password'
+        formIsValid = false
+    }
+    if (this.state.password !== this.state.confirm) {
+        errors['confirm'] = '*password doesn\'t match'
+        formIsValid = false
+    }
 
     this.setState ({
       errors: errors,
@@ -97,12 +94,12 @@ class Registration extends Component {
 
       userRegistration (user)
         .then (Response => {
-          console.log (Response, "User Registered successfully!!");
-          alert ("User Registered successfully");
+          console.log (Response, "user registered successfully!!");
+          alert ("user registered successfully");
         })
         .catch (error => {
           console.log ('Error', error.response);
-          console.log (error.response.data.message, "User Registration failed");
+          console.log (error.response.data.message, "user registration failed");
           alert (error.response.data.message);
         });
     }

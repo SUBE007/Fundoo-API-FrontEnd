@@ -1,5 +1,5 @@
 .loginpage {
-  margin-left: 40px;
+  margin-left: 30px;
 }
 
 h2 {
@@ -19,6 +19,7 @@ h2 {
   margin-top: 10px;
   margin-left: 100px;
   font-size: 31px;
+   text-align: justify;
 }
 
 .usernameLogin {
