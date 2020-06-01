@@ -36,10 +36,10 @@ export function forgotPassword (forgotPasswordDTO) {
     }
   );
 }
-export function resetPassword (resetPasswordDTO) {
+export function resetPassword (token,resetPasswordDTO) {
   return axiosService.axiosPost (
     "http://localhost:8080/user/resetpassword",
-    resetPasswordDTO,
+    resetPasswordDTO,token,
     {
       headers: {
         "Content-Type": "application/json;charset=utf-8",

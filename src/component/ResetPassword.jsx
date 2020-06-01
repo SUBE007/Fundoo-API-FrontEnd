@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import '../CSS/ResetPassword.css';
@@ -9,11 +13,11 @@ import {resetPassword} from '../services/UserService/UserServices';
 export class ResetPassword extends Component {
   constructor (props) {
     super (props);
-
     this.state = {
       password: '',
-      confirm: '',
-    };
+      confirmpassword: '',
+      errors: {},
+     };
   }
 
   axios = event => {
@@ -22,23 +26,57 @@ export class ResetPassword extends Component {
     });
   };
 
+  validateForm = () => {
+    let errors = {};
+    let formIsValid = true;
+     
+    if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,20})").test(this.state.password)) {
+        errors['password'] = '*enter the valid password'
+        formIsValid = false
+    }
+    if (!this.state.password) {
+        errors['password'] = '*enter the password'
+        formIsValid = false
+    }
+    if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,20})").test(this.state.confirmpassword)) {
+      errors['confirmpassword'] = '*enter the valid confirm password'
+      formIsValid = false
+    }
+    if (!this.state.confirmpassword) {
+        errors['confirmpassword'] = '*enter the confirm password'
+        formIsValid = false
+    }
+    if (this.state.password !== this.state.confirmpassword) {
+        errors['confirmpassword'] = '*password doesn\'t match'
+        formIsValid = false
+    }
+
+    this.setState ({
+      errors: errors,
+    });
+    return formIsValid;
+  };
+
   resetPasswordForm = () => {
-    let token = localStorage.getItem ("Token");
-    console.log (token, "token");
+    if (this.validateForm ()) {
+        let token = localStorage.getItem ("Token");
+        console.log (token, "token");
+        let user = {};
+        user.password = this.state.password;
+        user.confirmpassword = this.state.confirmpassword;
+        console.log (user);
 
-    let user = {};
-    user.password = this.state.password;
-    user.confirm = this.state.confirm;
-
-    resetPassword (token, user)
-      .then (Response => {
-        console.log ("Password Successfully Changed");
-        alert ("Password Successfully Changed");
-      })
-      .catch (err => {
-        console.log ("Failed To Change the Password");
-        alert ("Failed To Change the Password");
-      });
+        resetPassword (token, user)
+        .then (Response => {
+          console.log ("Password Successfully Changed");
+          alert ("*Password Successfully Changed");
+        })
+        .catch (error => {
+          console.log ('Error', error.response);
+          console.log (error.response.data.message, "Failed To Change the Password");
+          alert (error.response.data.message,"*Failed To Change the Password");
+         });
+    }
   };
 
   render () {
@@ -59,22 +97,32 @@ export class ResetPassword extends Component {
               <span>Reset Password</span>
             </div>
             <br />
-            <div className="resetpasswordtext">
-              <TextField margin="dense" label="password"  size="small"  name="password"  variant="outlined"
-                id="outlined-required"
-                inputProps={{
-                  style: {height: 35, width: 340},
-                }}
+            <div className="passwordtext">
+              <TextField required margin="dense" label="password"  size="small"  name="password"  variant="outlined"
+                id="outlined-adornment-password"
+                type={this.state.showPassword ? 'text' : 'password'}
+                inputProps={{style: {height: 35, width: 340}, }}
+                error={this.state.errors.password}
+                helperText={this.state.errors.password}
                 onChange={this.axios}
               />
             </div>
-            <div className="resetpasswordtext">
-              <TextField  margin="dense"  label="confirm"  size="small" name="confirm" variant="outlined"
-                id="outlined-required"
-                inputProps={{
-                  style: {height: 35, width: 340},
-                }}
+            <div className="confirmpasswordtext">
+              <TextField required margin="dense"  label="confirmpassword"  size="small" name="confirmpassword" variant="outlined"
+                id="outlined-adornment-password"
+                type={this.state.showPassword ? 'text' : 'password'}
+                error={this.state.errors.confirmpassword}
+                helperText={this.state.errors.confirmpassword}
                 onChange={this.axios}
+                inputProps={{style: {height: 35, width: 340},
+                endAdornment: (
+                  <InputAdornment position="end" sytle={{width: '10px'}}>
+                    <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} >
+                       {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                }}
               />
             </div>
             <br />
