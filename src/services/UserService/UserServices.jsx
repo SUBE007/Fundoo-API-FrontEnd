@@ -26,7 +26,7 @@ export function userLogin (loginDTO) {
 }
 
 export function forgotPassword (forgotPasswordDTO) {
-  return axiosService.axiosPost (
+  return axiosService.axiosPut (
     "http://localhost:8080/user/forgotpassword",
     forgotPasswordDTO,
     {
@@ -37,7 +37,7 @@ export function forgotPassword (forgotPasswordDTO) {
   );
 }
 export function resetPassword (token,resetPasswordDTO) {
-  return axiosService.axiosPost (
+  return axiosService.axiosPut (
     "http://localhost:8080/user/resetpassword",
     resetPasswordDTO,token,
     {

@@ -30,7 +30,8 @@ export class ForgotPassword extends Component {
         '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
       ).test (this.state.email)
     ) {
-      errors['email'] = '*Enter valid Email id';
+      errors['email'] = '*Enter valid pattern Email id';
+      formIsValid = false;
     }
     if (!this.state.email) {
       errors['email'] = '*Enter the Email Id';
@@ -73,9 +74,9 @@ export class ForgotPassword extends Component {
                <span style={{ color: "Green" }}>O</span>
                <span style={{ color: "Red" }}>O</span> 
             </div>
-            <p className="recoverymail"> Enter your recovery email</p>
+            <p className="recoverymail">Enter email for forgot password</p>
             <div className="forgotpasswordemail">
-              <TextField margin="dense" size="small" name="email" label="email"  variant="outlined"
+              <TextField required margin="dense" size="small" name="email" label="email"  variant="outlined"
                  id="outlined-required"
                  inputProps={{style: {height: 35,width: 340 },}}
                  onChange={this.axios}

@@ -20,34 +20,68 @@ export class Login extends Component {
       lastName: '',
       email: '',
       showPassword: '',
+      errors:{},
     };
   }
 
   axios = event => {
-    this.setState ({[event.target.name]: event.target.value,});
+    this.setState ({
+        [event.target.name]: event.target.value,});
   };
 
+  validateForm = () => {
+    let errors = {};
+    let formIsValid = true;
+     
+    if (!this.state.password) {
+        errors['password'] = '*enter the password'
+        formIsValid = false;
+        
+    }
+    if (!this.state.email) {
+        errors['email'] = '*enter the correct email'
+        formIsValid = false
+    }
+    if (this.state.password ===''|| this.state.email==='') {
+        errors['email'] = '*please enter all fields'
+        console.log (errors);
+        alert ("Login Failed! *please enter all fields");
+        formIsValid = false
+    }
+
+    this.setState ({
+        errors: errors,
+    });
+    return formIsValid;
+  };
+
+
   loginForm = () => {
+   if (this.validateForm ()) {
     let user = {};
     user.email = this.state.email;
     user.password = this.state.password;
-
+    console.log (user);
+    
     userLogin (user)
-      .then (response => {
-        console.log (response);
-        console.log ('data', response.data.data);
-        localStorage.setItem ('Token', response.data.message);
-        localStorage.setItem ('Email', response.data.data.email);
-        localStorage.setItem ('FirstName', response.data.data.firstName);
-        localStorage.setItem ('LastName', response.data.data.lastName);
-        localStorage.setItem ('Profile', response.data.data.profilePic);
-        alert ("Login Successfull");
+      .then (Response => {
+        console.log (Response, "user login successfully!!");
+        //console.log (response);
+        //console.log ('data', response.data.data);
+        // localStorage.setItem ('Token', response.data.message);
+        // localStorage.setItem ('Email', response.data.data.email);
+        // localStorage.setItem ('FirstName', response.data.data.firstName);
+        // localStorage.setItem ('LastName', response.data.data.lastName);
+        // localStorage.setItem ('Profile', response.data.data.profilePic);
+        alert ("user Login Successfull");
         this.props.history.push("/dashboard/notes");
       })
       .catch (error => {
         console.log (error);
-        alert ("Login Failed");
+        console.log (error.response.data.message, "*Login failed! invalid credentials");
+        alert (error.response.data.message);
       });
+     }
   };
 
   render () {
@@ -70,20 +104,23 @@ export class Login extends Component {
             </div>
 
             <div>
-              
-              <div className="usernameLogin">
+               <div className="usernameLogin">
                 <TextField required margin="dense" size="small"  name="email"  id="outlined-required" variant="outlined"
-                  label="username"
+                  label="enter email"
+                  error={this.state.errors.email}
+                  helperText={this.state.errors.email}
                   inputProps={{style: {height: 35 }, }}
                   onChange={this.axios}
                 />
               </div>
 
-             <div className="password">
+              <div className="password">
                 <TextField required size="small" margin="dense" name="password"  variant="outlined"
                   id="outlined-adornment-password"
                   type={this.state.showPassword ? 'text' : 'password'}
                   label="password"
+                  error={this.state.errors.password}
+                  helperText={this.state.errors.password}
                   style={{width: '90%'}}
                   inputProps={{
                     style: {height: 35},
@@ -118,12 +155,11 @@ export class Login extends Component {
               </div>
             </div>
             <br />
-            <Button  variant="contained"  color="primary"
-                onClick={() => this.props.history.push ('/forgotpassword')}
-            >
-              ForgotPassword
-            </Button>
-          </div>
+            <div  onClick={() => this.props.history.push ('/forgotpassword')} >
+              < a href="ForgotPassword" >ForgotPassword </a>
+            </div>
+          
+        </div>
         </CardContent>
       </Card>
     );
