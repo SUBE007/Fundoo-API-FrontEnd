@@ -66,18 +66,18 @@ export class Login extends Component {
     userLogin (user)
       .then (Response => {
         console.log (Response, "user login successfully!!");
-        //console.log (response);
-        //console.log ('data', response.data.data);
-        // localStorage.setItem ('Token', response.data.message);
-        // localStorage.setItem ('Email', response.data.data.email);
-        // localStorage.setItem ('FirstName', response.data.data.firstName);
-        // localStorage.setItem ('LastName', response.data.data.lastName);
-        // localStorage.setItem ('Profile', response.data.data.profilePic);
-        alert ("user Login Successfull");
+        // console.log (Response);
+        // console.log ('data', Response.data.data);
+        // localStorage.setItem ('Token', Response.data.message);
+        // localStorage.setItem ('Email', Response.data.data.email);
+        // localStorage.setItem ('FirstName', Response.data.data.firstName);
+        // localStorage.setItem ('LastName', Response.data.data.lastName);
+        // localStorage.setItem ('Profile', Response.data.data.profilePic);
+        alert ("*Login Successfull");
         this.props.history.push("/dashboard/notes");
       })
       .catch (error => {
-        console.log (error);
+        console.log ('Error', error.response);
         console.log (error.response.data.message, "*Login failed! invalid credentials");
         alert (error.response.data.message);
       });
