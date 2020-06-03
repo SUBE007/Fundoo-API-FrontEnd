@@ -30,11 +30,14 @@ export class ForgotPassword extends Component {
         '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
       ).test (this.state.email)
     ) {
+      console.log (errors);
       errors['email'] = '*Enter valid pattern Email id';
       formIsValid = false;
     }
     if (!this.state.email) {
       errors['email'] = '*Enter the Email Id';
+      console.log (errors);
+      alert (' invalid e-mail');
       formIsValid = false;
     }
     this.setState ({

@@ -74,7 +74,7 @@ export class Login extends Component {
         // localStorage.setItem ('LastName', Response.data.data.lastName);
         // localStorage.setItem ('Profile', Response.data.data.profilePic);
         alert ("*Login Successfull");
-        this.props.history.push("/dashboard/notes");
+        this.props.history.push("/dashboard");
       })
       .catch (error => {
         console.log ('Error', error.response);

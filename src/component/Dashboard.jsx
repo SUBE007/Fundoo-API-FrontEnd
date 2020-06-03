@@ -1,19 +1,11 @@
 import React ,{Component}from "react";
-import {AppBar,IconButton,Tooltip, createMuiTheme,Typography, }
+import {AppBar,IconButton,Tooltip, Typography, }
 from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import keep from "../assets/KeepLogo.png";
 import "../CSS/Dashboard.css";
 
-const theme = createMuiTheme({
-    overrides: {
-      MuiPopover: {
-        paper: { width: "30%",},
-       },
-    },
-  });
-    
- 
+  
 class Dashboard extends  Component{
     constructor(props) {
         super(props);
