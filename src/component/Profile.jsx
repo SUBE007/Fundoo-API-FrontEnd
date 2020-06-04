@@ -129,7 +129,7 @@ export default function SimplePopover (props) {
             </div>
             <Divider />
             <div className="profilefooter">
-              Privacy Policy .Terms of Service
+             <p>Privacy Policy .Terms of Service</p>  
             </div>
           </div>
         </Typography>

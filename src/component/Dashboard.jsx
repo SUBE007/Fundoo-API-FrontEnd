@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,16 +15,29 @@ import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 import ViewAgendaSharpIcon from '@material-ui/icons/ViewAgendaSharp';
 import {Tooltip} from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
-//import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Profile from '../component/Profile';
+import CloseIcon from "@material-ui/icons/Close";
 
 const theme = createMuiTheme ({});
 
 export class Dashboard extends Component {
   constructor (props) {
     super (props);
-    this.state = {};
+    this.state = {
+      search: "",
+    };
+    
   }
+  clearSearch = () => {
+    this.setState({
+      search: "",
+    });
+  };
+  handleChangeSearch = (event) => {
+    this.setState({
+      search: event.target.value,
+    });
+  };
 
   render () {
     return (
@@ -56,8 +68,15 @@ export class Dashboard extends Component {
                   <InputBase
                     style={{width: '100vh', marginLeft: '3%'}}
                     placeholder="Search"
+                    value={this.state.search} 
+                    onChange={this.handleChangeSearch}
                     inputProps={{'aria-label': 'search'}}
                   />
+                  <Tooltip title="Clear search" arrow>
+                      <IconButton onClick={this.clearSearch}>
+                        <CloseIcon />
+                      </IconButton>
+                    </Tooltip>
                 </div>
               </Card>
 
