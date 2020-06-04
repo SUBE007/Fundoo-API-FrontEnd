@@ -35,11 +35,11 @@ class Dashboard extends  Component{
                             style={{marginLeft: "1%",}}
                              >
                             <div className="fundoo1">
-                                <span style={{ color: "Blue" }}>F</span>
+                                <span style={{ color: "White" }}>F</span>
                                 <span style={{ color: "Red" }}>U</span>
                                 <span style={{ color: "Yellow" }}>N</span>
-                                <span style={{ color: "Blue" }}>D</span>
-                                <span style={{ color: "Green" }}>O</span>
+                                <span style={{ color: "White" }}>D</span>
+                                <span style={{ color: "Orange" }}>O</span>
                                 <span style={{ color: "Red" }}>O</span> 
                             </div>
                             </Typography>

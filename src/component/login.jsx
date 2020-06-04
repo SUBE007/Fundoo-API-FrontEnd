@@ -66,13 +66,13 @@ export class Login extends Component {
     userLogin (user)
       .then (Response => {
         console.log (Response, "user login successfully!!");
-        // console.log (Response);
-        // console.log ('data', Response.data.data);
-        // localStorage.setItem ('Token', Response.data.message);
-        // localStorage.setItem ('Email', Response.data.data.email);
-        // localStorage.setItem ('FirstName', Response.data.data.firstName);
-        // localStorage.setItem ('LastName', Response.data.data.lastName);
-        // localStorage.setItem ('Profile', Response.data.data.profilePic);
+        console.log (Response);
+        console.log ('data', Response.data.data);
+        localStorage.setItem ('Token', Response.data.message);
+        localStorage.setItem ('Email', Response.data.data.email);
+        localStorage.setItem ('FirstName', Response.data.data.firstName);
+        localStorage.setItem ('LastName', Response.data.data.lastName);
+        localStorage.setItem ('Profile', Response.data.data.profilePic);
         alert ("*Login Successfull");
         this.props.history.push("/dashboard");
       })

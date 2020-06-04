@@ -1,16 +1,4 @@
-.headerbar {
-    background-color: gainsboro;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-  }
-  
-.headerbar > * {
-    width: auto;
-    color: thistle;
-}
-  
+ 
 #searchbar {
     display: flex;
     align-items: center;
@@ -90,10 +78,11 @@
     align-items: flex-start;
 }
 .keepImageSpace {
-    margin-left: 5px;
+    margin-left: 45px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    margin-left: 10px;
 }
 #fundoo {
     margin-top: 7px;
@@ -103,4 +92,11 @@
     display: flex;
     float: right;
     padding-right: 10px;
+}
+.menu_andname{
+    display: flex;
+    margin-left: 0px;
+}
+.appBar_flex{
+    background-color: grey;
 }

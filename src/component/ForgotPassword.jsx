@@ -66,7 +66,7 @@ export class ForgotPassword extends Component {
 
   render () {
     return (
-      <Card className="forgot">
+      <Card className="forgot" >
         <CardContent>
           <div className="forgotpasswordpage">
             <div className="fundoo">

@@ -1,6 +1,6 @@
 .registercard {
   color: rgb(178, 76, 187);
-  margin-top: 5%;
+  margin-top: 3%;
   margin-left: 400px;
   width: 400px;
   height: 500px;
@@ -10,6 +10,7 @@
   padding: 3%;
   justify-content: space-evenly;
   flex-direction: column;
+  background-color: khaki;
 }
 
 .passwordline {
@@ -92,5 +93,9 @@ div p {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+  }
+  .backgroundregister{
+     background-color: khaki;
+
   }
 }
