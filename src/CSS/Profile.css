@@ -1,0 +1,29 @@
+.mainprofile {
+    padding: 5%;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 33%;
+}
+
+.profilefooter {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 11%;
+}
+
+.profileaccount {
+    box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 56px;
+    color: white;
+    font-style: initial;
+    font-family: none;
+    font-size: inherit;
+    opacity: 0.1%;
+} 

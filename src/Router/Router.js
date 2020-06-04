@@ -5,6 +5,7 @@ import Login from '../component/Login';
 import ForgotPassword from "../component/ForgotPassword";
 import ResetPassword from "../component/ResetPassword";
 import Dashboard from "../component/Dashboard";
+import Profile from "../component/Profile";
  
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/" exact component={Login} />
       <Route path="/login" exact component={Login} />
+      <Route path="/profile" exact component={Profile} />
 
    </BrowserRouter>
   );

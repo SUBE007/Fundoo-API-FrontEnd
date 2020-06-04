@@ -1,115 +1,101 @@
-import React ,{Component}from "react";
-import {AppBar,IconButton,Tooltip, Typography,InputBase,Card,}
-from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import keep from "../assets/KeepLogo.png";
-import "../CSS/Dashboard.css";
-import SearchIcon from "@material-ui/icons/Search";
-import CloseIcon from "@material-ui/icons/Close";
-import Logout from "@material-ui/icons/ExitToApp";
+import React, {Component} from 'react';
+// import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import '../CSS/Dashboard.css';
+import Keeplogo from '../assets/KeepLogo.png';
+import Card from '@material-ui/core/Card';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
+import ViewAgendaSharpIcon from '@material-ui/icons/ViewAgendaSharp';
+import {Tooltip} from '@material-ui/core';
+import AppsIcon from '@material-ui/icons/Apps';
+//import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Profile from '../component/Profile';
 
- 
- 
-  
-class Dashboard extends  Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-          headerName: "",
-          search: "",
-          profileImage: localStorage.getItem("userProfileImage"),
-         };
-         
-    }
-    clearSearch = () => {
-      this.setState({
-        search: "",
-      });
-    };
-    handleChangeSearch = (event) => {
-      this.setState({
-        search: event.target.value,
-      });
-    };
+const theme = createMuiTheme ({});
 
-    handleLogout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userDetails");
-      this.props.history.push("/login");
-    };
-    
-      render() {
-        return (
-          <div>
-            <AppBar id="appBar_decor">
-              <AppBar className="appBar_flex">
-                <div className="menu_andname">
-                  <Tooltip title="Main Menu" arrow>
-                    <IconButton  class="reduce_padding" id="butone"
-                        onClick={this.handleClick}
-                    >
-                    <MenuIcon id="reduceButtonSize" />
-                    </IconButton>
-                  </Tooltip>
-                  <div className="keepImageSpace">
-                        {this.state.headerName === "" ? (
-                        <React.Fragment>
-                            <img className="keep_img" src={keep} alt="F" />
-                            <Typography  id="fundoo" variant="h5" 
-                            style={{marginLeft: "1%",}}
-                             >
-                            <div className="fundoo1">
-                                <span style={{ color: "White" }}>F</span>
-                                <span style={{ color: "Red" }}>U</span>
-                                <span style={{ color: "Yellow" }}>N</span>
-                                <span style={{ color: "White" }}>D</span>
-                                <span style={{ color: "Orange" }}>O</span>
-                                <span style={{ color: "Red" }}>O</span> 
-                            </div>
-                            </Typography>
-                        </React.Fragment>
-                        ) 
-                        : (
-                        <Typography id="fundoo" variant="h5" color="textSecondary">
-                            {this.state.headerName}
-                        </Typography>
-                        )}
-                  </div>
-                  <Card id="appBar_card" >
-                      <Tooltip title="Search" arrow>
-                      <IconButton>
-                        <SearchIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <InputBase
-                      placeholder="Search"
-                      value={this.state.search} 
-                      onChange={this.handleChangeSearch}
-                      fullWidth
-                    />
-                    <Tooltip title="Clear search" arrow>
-                      <IconButton onClick={this.clearSearch}>
-                        <CloseIcon />
-                      </IconButton>
-                    </Tooltip>
-                     
-                  </Card>
-                  <div className="appicon">
-                      <Tooltip title="logout">
-                        <IconButton onClick={this.handleLogout}>
-                          <Logout />
-                        </IconButton>
-                      </Tooltip>
-                  </div>
-                 
+export class Dashboard extends Component {
+  constructor (props) {
+    super (props);
+    this.state = {};
+  }
+
+  render () {
+    return (
+      <div className="maindashboard">
+        <MuiThemeProvider theme={theme}>
+          <AppBar position="static" style={{backgroundColor: 'white'}}>
+            <Toolbar style={{color: 'black'}}>
+              <IconButton  title="Main menu"  edge="start"   color="inherit"  aria-label="menu">
+                    <MenuIcon />
+              </IconButton>
+              
+              <div>
+                <img src={Keeplogo} alt="Kepp Logo" />
+              </div>
+              <Typography
+                className="keep"
+                variant="h5"
+                style={{color: 'grey', marginLeft: '1%'}}
+              >
+                Fundoo
+              </Typography>
+              <Card className="card">
+                <div
+                  className="search"
+                  style={{marginLeft: '%', height: '7vh'}}
+                >
+                  <SearchIcon className="icon" />
+                  <InputBase
+                    style={{width: '100vh', marginLeft: '3%'}}
+                    placeholder="Search"
+                    inputProps={{'aria-label': 'search'}}
+                  />
                 </div>
-              </AppBar>
-               
-            </AppBar>
-             
-          </div>
-        );
-    }
-}
+              </Card>
 
+              <Tooltip
+                title="Refresh"
+                style={{color: 'grey', marginLeft: '10%'}}>
+                <RefreshOutlinedIcon />
+              </Tooltip>
+
+              <Tooltip title="List View"
+              style={{color: 'grey', marginLeft: '1.7%'}}>
+                <ViewAgendaSharpIcon />
+              </Tooltip>
+
+              <Tooltip title="Settings"
+              style={{color: 'grey', marginLeft: '1.7%'}}>
+                <SettingsOutlinedIcon />
+              </Tooltip>
+
+              <Tooltip title="Fundoo apps"
+                       style={{color: 'grey', marginLeft: '3.5%',marginRight:'1%'}}>
+              <AppsIcon/>
+              </Tooltip>
+               
+              <Tooltip title="Fundoo Account">
+                <Profile PropsDashboard={this.props} />
+              </Tooltip>
+            </Toolbar>
+          </AppBar>
+
+
+          <AppBar className="card1"  style={{backgroundColor: 'white'}}>
+
+          </AppBar>
+
+        </MuiThemeProvider>
+      </div>
+    );
+  }
+}
 export default Dashboard;

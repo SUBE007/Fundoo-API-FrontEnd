@@ -48,4 +48,15 @@ export function resetPassword (token,resetPasswordDTO) {
   );
 }
 
+export function chanageprofile (file, token) {
+  return axiosService.axiosPost (
+    "http://localhost:8080/profilepic/uploadprofilepic",
+     file, 
+     {
+       headers: {
+          "Content-Type": "multipart/form-data",
+       token: token,
+    },
+  });
+}
   
