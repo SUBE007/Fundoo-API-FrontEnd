@@ -5,7 +5,7 @@ import Login from '../component/Login';
 import ForgotPassword from "../component/ForgotPassword";
 import ResetPassword from "../component/ResetPassword";
 import Dashboard from "../component/Dashboard";
-
+ 
 const Router = () => {
   return (
     <BrowserRouter>
@@ -14,6 +14,8 @@ const Router = () => {
       <Route path="/resetpassword/:token" component={ResetPassword} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/" exact component={Login} />
+      <Route path="/login" exact component={Login} />
+
    </BrowserRouter>
   );
 };

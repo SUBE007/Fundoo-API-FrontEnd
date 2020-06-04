@@ -1,18 +1,42 @@
 import React ,{Component}from "react";
-import {AppBar,IconButton,Tooltip, Typography, }
+import {AppBar,IconButton,Tooltip, Typography,InputBase,Card,}
 from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import keep from "../assets/KeepLogo.png";
 import "../CSS/Dashboard.css";
+import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
+import Logout from "@material-ui/icons/ExitToApp";
 
+ 
+ 
   
 class Dashboard extends  Component{
     constructor(props) {
         super(props);
         this.state = {
           headerName: "",
-        };
-      }
+          search: "",
+          profileImage: localStorage.getItem("userProfileImage"),
+         };
+         
+    }
+    clearSearch = () => {
+      this.setState({
+        search: "",
+      });
+    };
+    handleChangeSearch = (event) => {
+      this.setState({
+        search: event.target.value,
+      });
+    };
+
+    handleLogout = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userDetails");
+      this.props.history.push("/login");
+    };
     
       render() {
         return (
@@ -51,10 +75,38 @@ class Dashboard extends  Component{
                         </Typography>
                         )}
                   </div>
+                  <Card id="appBar_card" >
+                      <Tooltip title="Search" arrow>
+                      <IconButton>
+                        <SearchIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <InputBase
+                      placeholder="Search"
+                      value={this.state.search} 
+                      onChange={this.handleChangeSearch}
+                      fullWidth
+                    />
+                    <Tooltip title="Clear search" arrow>
+                      <IconButton onClick={this.clearSearch}>
+                        <CloseIcon />
+                      </IconButton>
+                    </Tooltip>
+                     
+                  </Card>
+                  <div className="appicon">
+                      <Tooltip title="logout">
+                        <IconButton onClick={this.handleLogout}>
+                          <Logout />
+                        </IconButton>
+                      </Tooltip>
+                  </div>
+                 
                 </div>
               </AppBar>
-
+               
             </AppBar>
+             
           </div>
         );
     }

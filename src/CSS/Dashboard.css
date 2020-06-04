@@ -10,7 +10,8 @@
     width: 50%;
     margin-right: 10px;
 }
-  .MuiButtonBase-root.searchButton2 {
+  
+.MuiButtonBase-root.searchButton2 {
     display: none;
 }
   .header_left {
@@ -99,4 +100,20 @@
 }
 .appBar_flex{
     background-color: grey;
+}
+#appBar_card {
+    width: 600px;
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 1px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left:150px ;
+  }
+
+.appicon{
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      margin-left: 300px;
 }
