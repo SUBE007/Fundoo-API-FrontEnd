@@ -25,13 +25,14 @@ export function userLogin (loginDTO) {
   );
 }
 
-export function forgotPassword (forgotPasswordDTO) {
-  return axiosService.axiosPut (
+export function forgotPassword (email) {
+  return axiosService.axiosPost (
     "http://localhost:8080/user/forgotpassword",
-    forgotPasswordDTO,
+    email,
     {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        
       },
     }
   );
@@ -50,13 +51,14 @@ export function resetPassword (token,resetPasswordDTO) {
 
 export function chanageprofile (file, token) {
   return axiosService.axiosPost (
-    "http://localhost:8080/profilepic/uploadprofilepic",
+    "http://localhost:8080/profilepic/uploadImage",
      file, 
      {
        headers: {
           "Content-Type": "multipart/form-data",
        token: token,
-    },
-  });
+       },
+     }
+  );
 }
   

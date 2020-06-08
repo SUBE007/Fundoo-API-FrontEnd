@@ -10,6 +10,9 @@ import Divider from '@material-ui/core/Divider';
 import {Avatar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { withRouter } from "react-router-dom";
+import {TextField,Dialog, DialogTitle,DialogContent, DialogContentText, } from '@material-ui/core';
+import {chanageprofile} from '../services/UserService/UserServices';
 
 const useStyles = makeStyles (theme => ({
   typography: {
@@ -17,9 +20,15 @@ const useStyles = makeStyles (theme => ({
   },
 }));
 
-export default function SimplePopover (props) {
+function Profile  (props) {
+  let email = localStorage.getItem ('Email');
+  let firstName = localStorage.getItem ('FirstName');
+  let lastName = localStorage.getItem ('LastName');
+  let Profile =  localStorage.getItem ('Profile');
   const classes = useStyles ();
   const [anchor, setAnchor] = React.useState (null);
+  const [openDialog, setOpenDialog] = React.useState (false);
+  const [file, setFile] = React.useState ('');
 
   const handleClick = event => {
     setAnchor (event.currentTarget);
@@ -29,10 +38,43 @@ export default function SimplePopover (props) {
     setAnchor (null);
   };
 
+  const HandleOpenFileChange = () => {
+    setOpenDialog (true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog (false);
+  };
+  const handleFileChange = e => {
+    setFile (e.target.files[0]);
+  };
+
   const handleLoginChange = () => {
     console.log (props);
-    props.PropsDashboard.history.push ('/');
+    localStorage.removeItem ('Token');
+    localStorage.removeItem ('FirstName');
+    localStorage.removeItem ('LastName');
+    localStorage.removeItem ('Email');
+    localStorage.removeItem ('Profile');
+    props.history.push ('/');
   };
+
+  const handleFileSubmitChange = () => {
+    let token = localStorage.getItem ('Token');
+    const formData = new FormData ();
+    formData.append ('file', file, file.name);
+    let Profile = localStorage.getItem ('file.name');
+    chanageprofile (formData, token)
+      .then (Response => {
+        console.log (Response);
+        setOpenDialog (true);
+        alert('Profile Change');
+      })
+      .catch (err => {
+        console.log ('profile not  update', err);
+      });
+  };
+
   const open = Boolean (anchor);
   const id = open ? 'simple-popover' : null;
 
@@ -40,14 +82,15 @@ export default function SimplePopover (props) {
     <div>
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <Tooltip title="Fundoo Account">
-          <Avatar onClick={handleClick} />
+          <Avatar 
+            alt={firstName}
+            src={localStorage.getItem ('ProfilePic')}
+            onClick={handleClick} 
+          />
         </Tooltip>
       </div>
-      <Popover
-        // style={{height: '100%'}}
-        id={id}
-        open={open}
-        anchor={anchor}
+      <Popover  id={id} open={open}  anchor={anchor}
+        style={{marginTop: '-7.1%'}}
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
@@ -69,11 +112,16 @@ export default function SimplePopover (props) {
                 }}
                 badgeContent={
                   <CameraAltIcon
+                    onClick={HandleOpenFileChange}
                     style={{backgroundColor: 'white', borderRadius: '50%'}}
                   />
                 }
               >
-                <Avatar style={{width: '77px', height: '77px'}} />
+                <Avatar
+                    alt={localStorage.getItem ('Name')}
+                    src={localStorage.getItem ('Profile')}
+                    style={{width: '77px', height: '77px'}}
+                />
               </Badge>
             </div>
 
@@ -84,10 +132,17 @@ export default function SimplePopover (props) {
                 top: '2%',
                 padding: '2%',
               }}
-            />
-            <div
-              className="profileaccount"
-              style={{
+              >
+              <b>{firstName} {lastName}</b>
+              </div>
+              <div style={{ justifyContent: "center", display: "flex", top: "5%", color: "gray" }}>
+              <b>{email}</b>
+
+            </div>
+            <br/>
+             
+            <div className="profileaccount"
+             style={{
                 backgroundColor: '#e0e0e0',
                 padding: '3% ',
                 paddingBottom: '3%',
@@ -97,8 +152,7 @@ export default function SimplePopover (props) {
               Manage Your Fundoo Account
             </div>
             <br/>
-            {/* <Divider /> */}
-
+           
             <Divider />
             <div style={{marginTop: '5%'}}>
             <PersonAddIcon/>
@@ -134,6 +188,64 @@ export default function SimplePopover (props) {
           </div>
         </Typography>
       </Popover>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="changeProfile"
+      >
+        <DialogTitle
+          id="max-width-dialog-title"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: ' x-large',
+            fontfamily: 'monospace',
+            fontStyle: 'unset',
+          }}
+        >
+          Select Profile Photo
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                flexDirection: 'column',
+                width: '131%',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <TextField type="file" onChange={handleFileChange} />
+              </div>
+              <div
+                style={{display: 'flex', justifyContent: 'space-between',flexDirection: 'row',
+                  paddingTop: '22%',
+                  paddingRight: '22%'
+                }}
+              >
+                <Button  variant="contained"  color="primary"
+                  onClick={handleFileSubmitChange}
+                >
+                  Upload
+                </Button>
+                
+                <Button variant="contained" color="primary"
+                   onClick={handleCloseDialog}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+export default withRouter (Profile); 

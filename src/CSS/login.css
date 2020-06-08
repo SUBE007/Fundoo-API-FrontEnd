@@ -1,6 +1,5 @@
 .loginpage {
   margin-left: 0px;
-  background-color: khaki;
   width: 400px;
   height: 520px ;
 }
@@ -27,7 +26,7 @@
 
 .usernameLogin {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   flex-direction: column;
   width: 90%;
 }
@@ -57,6 +56,7 @@
 
 .password {
   margin-top: 4%;
+  height: 35;
 }
 
 .flex-container {

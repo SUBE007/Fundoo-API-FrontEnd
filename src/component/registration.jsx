@@ -8,6 +8,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import PhoneIcon from '@material-ui/icons/Phone';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import {userRegistration} from "../services/UserService/UserServices";
  
 
@@ -34,44 +37,53 @@ class Registration extends Component {
   validateForm = () => {
     let errors = {};
     let formIsValid = true;
+    if (!RegExp("^[A-Z][a-zA-Z]{3,20}$").test(this.state.firstName)) {
+      errors['firstName'] = '*Enter the Valid first name';
+      formIsValid = false;
+    }
     if (!this.state.firstName) {
-      errors['firstName'] = '*enter the first name';
+      errors['email'] = "*FirstName name can not be empty";
+      formIsValid = false;
+    }
+    if (!RegExp("^[A-Z][a-zA-Z]{3,20}$").test(this.state.lastName)) {
+      errors['lastName'] = '*Enter the Valid lastName';
       formIsValid = false;
     }
     if (!this.state.lastName) {
-      errors['lastName'] = '*enter the last name';
+      errors['lastName'] = '*LastName can not be empty';
       formIsValid = false;
     }
     if (!RegExp ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\. [A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
         .test (this.state.email)
     ) {
-      errors['email'] = "*enter valid e-mail id";
+      errors['email'] = "*Enter valid pattern e-mail id";
+      formIsValid=false;
     }
     if (!this.state.email) {
-      errors['email'] = "*enter the e-mail id";
+      errors['email'] = "*E-mail id can not be empty";
       formIsValid = false;
     }
-    if (!RegExp("^[1-9][0-9]{9}$").test(this.state.phoneNo)) {
-        errors['phoneNo'] = "*enter valid phone number";
+    if (!RegExp("^[6-9][0-9]{9}$").test(this.state.phoneNo)) {
+        errors['phoneNo'] = "*Enter valid pattern Phone number";
     }
     if (!this.state.phoneNo) {
-        errors['phoneNo'] = "*enter your phone number";
+        errors['phoneNo'] = "*Phone number can not be empty";
         formIsValid = false
     }
     if (!RegExp("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!*]).{8,20})").test(this.state.password)) {
-        errors['password'] = '*enter the valid password'
+        errors['password'] = '*Enter the valid pattern password'
         formIsValid = false
     }
     if (!this.state.password) {
-        errors['password'] = '*enter the password'
+        errors['password'] = '*Password can not be empty'
         formIsValid = false
     }
     if (!this.state.confirm) {
-        errors['confirm'] = '*enter the confirm password'
+        errors['confirm'] = '*Enter the confirm password'
         formIsValid = false
     }
     if (this.state.password !== this.state.confirm) {
-        errors['confirm'] = '*password doesn\'t match'
+        errors['confirm'] = '*Password doesn\'t match'
         formIsValid = false
     }
 
@@ -93,14 +105,17 @@ class Registration extends Component {
       console.log (user);
 
       userRegistration (user)
-        .then (Response => {
-          console.log (Response, "user registered successfully!!");
-          alert ("user registered successfully");
+        .then (response => {
+          console.log (response, "User registered successfully!!");
+          alert ("User registered successfully");
+          this.props.history.push("/login");
         })
         .catch (error => {
           console.log ('Error', error.response);
-          console.log (error.response.data.message, "user registration failed");
-          alert (error.response.data.message);
+          // console.log ("User registration failed");
+           alert ("User registration failed");
+         // console.log (error.response.data.message, "user registration failed");
+          //alert (error.response.data.message);
         });
     }
   };
@@ -125,29 +140,44 @@ class Registration extends Component {
                   <div className="userfirstlastname">
                     <TextField required margin="dense" size="small" name="firstName" variant="outlined"
                       id="outlined"
-                      label="first name"
+                      label="First name"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.firstName}
                       helperText={this.state.errors.firstName}
+                       
                     />
 
                     <TextField required  margin="dense" size="small" name="lastName" variant="outlined"
                       id="outlined"
-                      label="last name"
+                      label="Last name"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.lastName}
                       helperText={this.state.errors.lastName}
+                      InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end" sytle={{width: '10px'}}>
+                           <PermIdentityIcon /> 
+                        </InputAdornment>
+                        ),
+                       }}
                     />
                   </div>
                   <div className="useremail1">
                     <TextField required  margin="dense" size="small"  name="email"  variant="outlined"
                       id="outlined"
-                      label="e-mail"
+                      label="E-mail"
                       onChange={this.axios}
                       error={this.state.errors.email}
                       helperText={this.state.errors.email}
+                      InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end" sytle={{width: '10px'}}>
+                           <MailOutlineIcon /> 
+                        </InputAdornment>
+                        ),
+                       }}
                     />
                     
                   </div>
@@ -155,39 +185,35 @@ class Registration extends Component {
                     <TextField required margin="dense"  name="phoneNo"  variant="outlined"
                       size="small"
                       id="outlined"
-                      label="phone number"
+                      label="Phone number"
                       onChange={this.axios}
                       error={this.state.errors.phoneNo}
                       helperText={this.state.errors.phoneNo}
+                      InputProps={{
+                        endAdornment: (
+                        <InputAdornment position="end" sytle={{width: '10px'}}>
+                           <PhoneIcon /> 
+                        </InputAdornment>
+                        ),
+                       }}
                     />
                   </div>
                   <div className="userpassword">
                     <TextField required  margin="dense"  size="small" name="password" variant="outlined"
                       id="outlined-adornment-password"
                       type={this.state.showPassword ? 'text' : 'password'}
-                      label="password"
+                      label="Password"
                       style={{width: '48%'}}
                       onChange={this.axios}
                       error={this.state.errors.password}
                       helperText={this.state.errors.password}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end" sytle={{width: '1px'}}>
-                            <IconButton
-                              onClick={() =>
-                                this.setState ({ showPassword: !this.state.showPassword })}
-                            >
-                            </IconButton> 
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
+                     />
                     <br />
 
                     <TextField required margin="dense" size="small" name="confirm" variant="outlined"
                       id="outlined-adornment-password"
                       type={this.state.showPassword ? 'text' : 'password'}
-                      label="confirm pass"
+                      label="Confirm pass"
                       value={this.state.confirm}
                       onChange={this.axios}
                       error={this.state.errors.confirm}
@@ -195,7 +221,7 @@ class Registration extends Component {
                       style={{width: '48%'}}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end" sytle={{width: '1px'}}>
+                          <InputAdornment position="end" sytle={{width: '10px'}}>
                             <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword })} >
                                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>

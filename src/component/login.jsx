@@ -7,6 +7,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import CardContent from '@material-ui/core/CardContent';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Card from '@material-ui/core/Card';
 import {userLogin} from "../services/UserService/UserServices";
 
@@ -21,6 +22,7 @@ export class Login extends Component {
       email: '',
       showPassword: '',
       errors:{},
+ 
     };
   }
 
@@ -34,16 +36,16 @@ export class Login extends Component {
     let formIsValid = true;
      
     if (!this.state.password) {
-        errors['password'] = '*enter the password'
+        errors['password'] = '*Enter the password'
         formIsValid = false;
         
     }
     if (!this.state.email) {
-        errors['email'] = '*enter the correct email'
+        errors['email'] = '*Enter the correct email'
         formIsValid = false
     }
     if (this.state.password ===''|| this.state.email==='') {
-        errors['email'] = '*please enter all fields'
+        errors['email'] = '*Please enter all fields'
         console.log (errors);
         alert ("Login Failed! *please enter all fields");
         formIsValid = false
@@ -55,31 +57,30 @@ export class Login extends Component {
     return formIsValid;
   };
 
-
+  
   loginForm = () => {
    if (this.validateForm ()) {
     let user = {};
     user.email = this.state.email;
     user.password = this.state.password;
-    console.log (user);
-    
+     
     userLogin (user)
-      .then (Response => {
-        console.log (Response, "user login successfully!!");
-        console.log (Response);
-        console.log ('data', Response.data.data);
-        localStorage.setItem ('Token', Response.data.message);
-        localStorage.setItem ('Email', Response.data.data.email);
-        localStorage.setItem ('FirstName', Response.data.data.firstName);
-        localStorage.setItem ('LastName', Response.data.data.lastName);
-        localStorage.setItem ('Profile', Response.data.data.profilePic);
-        alert ("*Login Successfull");
+      .then (response => {
+        // console.log (response);
+        // console.log (response, "user login successfully!!");
+        // console.log ('data', response.data.data);
+        localStorage.setItem ('Token',response.data.message);
+        localStorage.setItem ('Email', response.data.email);
+        localStorage.setItem ('FirstName', response.data.firstName);
+        localStorage.setItem ('LastName', response.data.lastName);
+        localStorage.setItem ('Profile', response.data.profilePic);
+        alert ("*Login SuccessfullFront");
         this.props.history.push("/dashboard");
       })
       .catch (error => {
         console.log ('Error', error.response);
-        console.log (error.response.data.message, "*Login failed! invalid credentials");
-        alert (error.response.data.message);
+        console.log ("*Login failed! invalid credentials");
+        alert ("*Login failed! invalid credentials");
       });
      }
   };
@@ -106,10 +107,16 @@ export class Login extends Component {
             <div>
                <div className="usernameLogin">
                 <TextField required margin="dense" size="small"  name="email"  id="outlined-required" variant="outlined"
-                  label="enter email"
+                  label="Enter email"
                   error={this.state.errors.email}
                   helperText={this.state.errors.email}
-                  inputProps={{style: {height: 35 }, }}
+                  InputProps={{
+                    endAdornment: (
+                    <InputAdornment position="end" sytle={{width: '10px'}}>
+                       <MailOutlineIcon /> 
+                    </InputAdornment>
+                    ),
+                   }}
                   onChange={this.axios}
                 />
               </div>
@@ -118,38 +125,35 @@ export class Login extends Component {
                 <TextField required size="small" margin="dense" name="password"  variant="outlined"
                   id="outlined-adornment-password"
                   type={this.state.showPassword ? 'text' : 'password'}
-                  label="password"
+                  label="Password"
                   error={this.state.errors.password}
                   helperText={this.state.errors.password}
                   style={{width: '90%'}}
-                  inputProps={{
-                    style: {height: 35},
-                     endAdornment: (
-                      <InputAdornment position="end" sytle={{width: '1px'}}>
+                  onChange={this.axios}
+                  InputProps={{
+                      endAdornment: (
+                      <InputAdornment position="end" sytle={{width: '10px'}}>
                         <IconButton  onClick={() => this.setState ({showPassword: !this.state.showPassword }) } >
                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />} 
                         </IconButton>
                       </InputAdornment>
                     ),
                   }}
-                  onChange={this.axios}
+                  
                 />
               </div>
             
             </div>
   
             <div className="flex-container">
+              <div onClick={() => this.props.history.push ('/register')}>
+                 <a href="Register" >Register </a>
+               </div>
+               {/*disabled={this.state.disabled} onChange={this.handleChange} */}
               <div>
-                <Button  color="primary" variant="contained"
-                   onClick={() => this.props.history.push ('/register')}
-                >
-                  Register
-                </Button>
-              </div>
-              <div>
-                <Button  variant="contained"  color="primary"
-                   onClick={this.loginForm}
-                  >
+                <Button variant="contained"  color="primary"
+                    onClick={this.loginForm} 
+                 >
                   Login
                 </Button>
               </div>

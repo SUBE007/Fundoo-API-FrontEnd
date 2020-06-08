@@ -10,7 +10,7 @@
   padding: 3%;
   justify-content: space-evenly;
   flex-direction: column;
-  background-color: khaki;
+   
 }
 
 .passwordline {
@@ -94,8 +94,5 @@ div p {
       flex-direction: row;
       justify-content: space-between;
   }
-  .backgroundregister{
-     background-color: khaki;
-
-  }
+   
 }

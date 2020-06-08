@@ -4,7 +4,9 @@ import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import '../CSS/ForgotPassword.css';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import {forgotPassword} from '../services/UserService/UserServices';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 export class ForgotPassword extends Component {
   constructor (props) {
@@ -53,13 +55,14 @@ export class ForgotPassword extends Component {
       console.log (user);
 
       forgotPassword (user)
-        .then (Response => {
-          console.log (Response, 'Token has been sent to your mail, Please Verify first');
-          alert (`Token has been sent to youbr mail, Please Verify it first`);
+        .then (response => {
+         console.log (response, 'Token has been sent to your mail, Please Verify first');
+          alert ("Token has been sent to youbr mail");
+          this.props.history.push("/resetpassword/:token");
         })
-        .catch (err => {
-          console.log (Response, 'Invalid E-mail');
-          alert (' invalid e-mail');
+        .catch (error => {
+          console.log (error, "Invalid E-mail");
+          alert ("Invalid E-mail");
         });
     }
   };
@@ -79,12 +82,22 @@ export class ForgotPassword extends Component {
             </div>
             <p className="recoverymail">Enter email for forgot password</p>
             <div className="forgotpasswordemail">
-              <TextField required margin="dense" size="small" name="email" label="email"  variant="outlined"
+              <TextField required margin="dense" size="small" name="email" variant="outlined"
                  id="outlined-required"
-                 inputProps={{style: {height: 35,width: 340 },}}
+                 label="Email"
                  onChange={this.axios}
                  error={this.state.errors.email}
                  helperText={this.state.errors.email}
+                  
+                InputProps={{
+                   style: {width: 340 },
+                   endAdornment: (
+                    <InputAdornment position="end" sytle={{width: '10px'}}>
+                      <MailOutlineIcon /> 
+                    </InputAdornment>
+                   ),
+               }}
+                 
               />
             </div>
             <br />
