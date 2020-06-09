@@ -6,7 +6,6 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import CardContent from '@material-ui/core/CardContent';
-import LockIcon from '@material-ui/icons/Lock';
 import Card from '@material-ui/core/Card';
 import '../CSS/ResetPassword.css';
 import {resetPassword} from '../services/UserService/UserServices';
@@ -17,6 +16,7 @@ export class ResetPassword extends Component {
     this.state = {
       password: '',
       confirmpassword: '',
+      showPassword: '',
       errors: {},
      };
   }
@@ -98,6 +98,7 @@ export class ResetPassword extends Component {
               <span>Reset Password</span>
             </div>
             <br />
+           
             <div className="passwordtext">
               <TextField required margin="dense" label="Password"  size="small"  name="password"  variant="outlined"
                 id="outlined-adornment-password"
@@ -108,6 +109,7 @@ export class ResetPassword extends Component {
                 onChange={this.axios}
               />
             </div>
+            <br />
             <div className="confirmpasswordtext">
               <TextField required margin="dense"  label="Confirm Password"  size="small" name="confirmpassword" variant="outlined"
                 id="outlined-adornment-password"

@@ -25,10 +25,10 @@ export function userLogin (loginDTO) {
   );
 }
 
-export function forgotPassword (email) {
+export function forgotPassword (forgotPasswordDto) {
   return axiosService.axiosPost (
     "http://localhost:8080/user/forgotpassword",
-    email,
+    forgotPasswordDto,
     {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -37,10 +37,10 @@ export function forgotPassword (email) {
     }
   );
 }
-export function resetPassword (token,resetPasswordDTO) {
+export function resetPassword (resetPasswordDTO) {
   return axiosService.axiosPut (
     "http://localhost:8080/user/resetpassword",
-    resetPasswordDTO,token,
+    resetPasswordDTO,
     {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
