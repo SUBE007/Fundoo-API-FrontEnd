@@ -7,12 +7,15 @@ import '../CSS/ForgotPassword.css';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {forgotPassword} from '../services/UserService/UserServices';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import Snackbar from "@material-ui/core/Snackbar";
 
 export class ForgotPassword extends Component {
   constructor (props) {
     super (props);
     this.state = {
       email: '',
+      snackbarMessage: "",
+      snackbarOpen: false,
       errors: {},
     };
   }
@@ -34,13 +37,21 @@ export class ForgotPassword extends Component {
     ) {
       console.log (errors);
       errors['email'] = '*Enter valid pattern Email id';
+      this.setState({
+          snackbarOpen: true,
+          snackbarMessage: "Enter valid pattern Email id",
+      });
+      
       formIsValid = false;
     }
     if (!this.state.email) {
       errors['email'] = '*Enter the Email Id';
       console.log (errors);
-      alert (' invalid e-mail');
-      formIsValid = false;
+      this.setState({
+        snackbarOpen: true,
+        snackbarMessage: "Invalid email id email cant be empty",
+     });
+     formIsValid = false;
     }
     this.setState ({
       errors: errors,
@@ -56,13 +67,22 @@ export class ForgotPassword extends Component {
 
       forgotPassword (user)
         .then (response => {
-         console.log (response, 'Token has been sent to your mail, Please Verify first');
-          alert ("Token has been sent to youbr mail");
+          localStorage.setItem ('Token',response.data.message);
+          console.log (response, 'Token has been sent to your mail, Please Verify first');
+          this.setState({
+            snackbarOpen: true,
+            snackbarMessage: "Token has been sent to youbr mail",
+          });
+          //alert ("Token has been sent to youbr mail");
           this.props.history.push("/resetpassword/:token");
         })
         .catch (error => {
-          console.log (error, "Invalid E-mail");
-          alert ("Invalid E-mail");
+          console.log (error, "Invalid e-mail");
+          this.setState({
+            snackbarOpen: true,
+            snackbarMessage: "Invalid E-mail",
+          });
+           //alert ("Invalid e-mail");
         });
     }
   };
@@ -100,6 +120,18 @@ export class ForgotPassword extends Component {
                  
               />
             </div>
+
+            <Snackbar
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              open={this.state.snackbarOpen}
+              autoHideDuration={3000}
+              onClose={() => this.setState({ snackbarOpen: false })}
+              message={this.state.snackbarMessage}
+            ></Snackbar>
+
             <br />
             <div className="nextbutton">
               <Button color="primary"  variant="contained" 

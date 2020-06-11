@@ -24,7 +24,7 @@ function Profile  (props) {
   let email = localStorage.getItem ('Email');
   let firstName = localStorage.getItem ('FirstName');
   let lastName = localStorage.getItem ('LastName');
-  let Profile =  localStorage.getItem ('Profile');
+ // let Profile =  localStorage.getItem ('Profile');
   const classes = useStyles ();
   const [anchor, setAnchor] = React.useState (null);
   const [openDialog, setOpenDialog] = React.useState (false);
@@ -60,13 +60,16 @@ function Profile  (props) {
   };
 
   const handleFileSubmitChange = () => {
-    let token = localStorage.getItem ('Token');
+    //let token = localStorage.getItem ('Token');
     const formData = new FormData ();
     formData.append ('file', file, file.name);
-    let Profile = localStorage.getItem ('file.name');
-    chanageprofile (formData, token)
-      .then (Response => {
-        console.log (Response);
+    //let Profile = localStorage.getItem ('file.name');
+    
+    chanageprofile (formData)
+      .then (response => {
+        console.log (response);
+        console.log ('data', response.data.data);
+        localStorage.setItem ('Profile',response.data.data);
         setOpenDialog (true);
         alert('Profile Change');
       })
@@ -84,7 +87,7 @@ function Profile  (props) {
         <Tooltip title="Fundoo Account">
           <Avatar 
             alt={firstName}
-            src={localStorage.getItem ('ProfilePic')}
+            src={localStorage.getItem ('Profile')}
             onClick={handleClick} 
           />
         </Tooltip>
@@ -155,13 +158,13 @@ function Profile  (props) {
            
             <Divider />
             <div style={{marginTop: '5%'}}>
-            <PersonAddIcon/>
-              <MenuItem
+               <MenuItem
                 title="Fundoo Account"
                 onClick={handleLoginChange}
                 style={{justifyContent: 'center', display: 'flex'}}
               >
-                Add another account
+                <PersonAddIcon />
+                  Add another account
               </MenuItem>
 
             </div>
